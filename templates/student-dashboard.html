@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard | HostelEase</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #173f78;
+            min-height: 100vh;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: #ffffff;
+            height: 76px;
+            padding: 0 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #e5eaf2;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: #123f78;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .student-name {
+            color: #4d6482;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            text-decoration: none;
+            color: #ffffff;
+            background: #123f78;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: #0d315f;
+            transform: translateY(-1px);
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 42px auto 60px;
+        }
+
+        .welcome-section {
+            margin-bottom: 32px;
+        }
+
+        .welcome-section h1 {
+            font-size: 34px;
+            color: #123f78;
+            margin-bottom: 8px;
+        }
+
+        .welcome-section p {
+            color: #61728b;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* ================= QUICK PROFILE ================= */
+
+        .profile-summary {
+            background: linear-gradient(135deg, #123f78, #1e5a9d);
+            border-radius: 18px;
+            padding: 28px 30px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+            margin-bottom: 38px;
+            box-shadow: 0 12px 30px rgba(18, 63, 120, 0.18);
+        }
+
+        .profile-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .profile-info h2 {
+            font-size: 23px;
+            margin-bottom: 6px;
+        }
+
+        .profile-info p {
+            color: #e0ebf9;
+            font-size: 14px;
+        }
+
+        .profile-btn {
+            text-decoration: none;
+            color: #123f78;
+            background: white;
+            padding: 12px 20px;
+            border-radius: 9px;
+            font-weight: 700;
+            white-space: nowrap;
+            transition: 0.2s ease;
+        }
+
+        .profile-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* ================= SECTION ================= */
+
+        .section-title {
+            font-size: 24px;
+            color: #123f78;
+            margin-bottom: 20px;
+        }
+
+        /* ================= SERVICE GRID ================= */
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .service {
+            background: #ffffff;
+            min-height: 245px;
+            padding: 30px 28px;
+            border-radius: 18px;
+            border: 1px solid #dce5f0;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            transition: all 0.25s ease;
+            box-shadow: 0 6px 18px rgba(20, 55, 90, 0.05);
+        }
+
+        .service:hover {
+            transform: translateY(-6px);
+            border-color: #3578d4;
+            box-shadow: 0 15px 35px rgba(20, 65, 120, 0.12);
+        }
+
+        .service-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 14px;
+            background: #edf4ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 29px;
+            margin-bottom: 22px;
+        }
+
+        .service h3 {
+            color: #123f78;
+            font-size: 22px;
+            margin-bottom: 11px;
+        }
+
+        .service p {
+            color: #58708f;
+            font-size: 15px;
+            line-height: 1.65;
+        }
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            text-align: center;
+            margin-top: 55px;
+            padding-top: 25px;
+            border-top: 1px solid #dce3ec;
+            color: #7a899d;
+            font-size: 14px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1100px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .logo {
+                font-size: 23px;
+            }
+
+            .student-name {
+                display: none;
+            }
+
+            .container {
+                width: 92%;
+                margin-top: 30px;
+            }
+
+            .welcome-section h1 {
+                font-size: 28px;
+            }
+
+            .profile-summary {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service {
+                min-height: 210px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            HostelEase
+        </div>
+
+        <div class="nav-right">
+
+            <span class="student-name">
+                {{ student.name if student else "Student" }}
+            </span>
+
+            <a href="{{ url_for('student_logout') }}" class="logout-btn">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="container">
+
+        <!-- Welcome -->
+
+        <section class="welcome-section">
+
+            <h1>
+                Welcome, {{ student.name if student else "Student" }}!
+            </h1>
+
+            <p>
+                Manage your hostel services, room, fees, complaints,
+                messages and other hostel activities from one place.
+            </p>
+
+        </section>
+
+
+        <!-- ================= PROFILE SUMMARY ================= -->
+
+        <section class="profile-summary">
+
+            <div class="profile-left">
+
+                <div class="avatar">
+                    👤
+                </div>
+
+                <div class="profile-info">
+
+                    <h2>
+                        {{ student.name if student else "Student" }}
+                    </h2>
+
+                    <p>
+                        {{ student.email if student else "Student Account" }}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <a href="{{ url_for('student_profile') }}"
+               class="profile-btn">
+
+                View My Profile →
+
+            </a>
+
+        </section>
+
+
+        <!-- ================= SERVICES ================= -->
+
+        <h2 class="section-title">
+            Hostel Services
+        </h2>
+
+
+        <div class="services-grid">
+
+
+            <!-- ROOM SWAP -->
+
+            <a href="{{ url_for('student_room_swap') }}"
+               class="service">
+
+                <div class="service-icon">
+                    🔄
+                </div>
+
+                <h3>
+                    Room Swap
+                </h3>
+
+                <p>
+                    Request a room swap with another student
+                    and track your request.
+                </p>
+
+            </a>
+
+
+            <!-- COMPLAINTS -->
+
+            <a href="{{ url_for('student_complaints') }}"
+               class="service">
+
+                <div class="service-icon">
+                    📝
+                </div>
+
+                <h3>
+                    Complaints
+                </h3>
+
+                <p>
+                    Submit and track your hostel complaints
+                    and service requests.
+                </p>
+
+            </a>
+
+
+            <!-- MESSAGES -->
+
+            <a href="{{ url_for('student_messages') }}"
+               class="service">
+
+                <div class="service-icon">
+                    💬
+                </div>
+
+                <h3>
+                    Messages
+                </h3>
+
+                <p>
+                    Communicate directly with hostel
+                    administration.
+                </p>
+
+            </a>
+
+
+            <!-- HOSTEL NOTICES -->
+
+            <a href="{{ url_for('student_hostel_notices') }}"
+               class="service">
+
+                <div class="service-icon">
+                    📣
+                </div>
+
+                <h3>
+                    Hostel Notices
+                </h3>
+
+                <p>
+                    Read the latest official hostel notices,
+                    announcements and important updates.
+                </p>
+
+            </a>
+
+
+            <!-- FEES -->
+
+            <a href="{{ url_for('student_fees') }}"
+               class="service">
+
+                <div class="service-icon">
+                    💳
+                </div>
+
+                <h3>
+                    Fees & Payments
+                </h3>
+
+                <p>
+                    Check hostel fees, pending dues and
+                    payment status.
+                </p>
+
+            </a>
+
+
+            <!-- PAYMENTS -->
+
+            <a href="{{ url_for('student_payments') }}"
+               class="service">
+
+                <div class="service-icon">
+                    💰
+                </div>
+
+                <h3>
+                    Payments
+                </h3>
+
+                <p>
+                    View your payment history and
+                    transaction details.
+                </p>
+
+            </a>
+
+
+            <!-- LEAVE -->
+
+            <a href="{{ url_for('student_leave') }}"
+               class="service">
+
+                <div class="service-icon">
+                    📅
+                </div>
+
+                <h3>
+                    Leave Request
+                </h3>
+
+                <p>
+                    Apply for hostel leave and track
+                    your request status.
+                </p>
+
+            </a>
+
+
+            <!-- MY PROFILE -->
+
+            <a href="{{ url_for('student_profile') }}"
+               class="service">
+
+                <div class="service-icon">
+                    👤
+                </div>
+
+                <h3>
+                    My Profile
+                </h3>
+
+                <p>
+                    View your student account information,
+                    personal details and academic information.
+                </p>
+
+            </a>
+
+
+        </div>
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer class="footer">
+
+            <p>
+                © 2026 HostelEase — Hostel Management System
+            </p>
+
+        </footer>
+
+    </main>
+
+</body>
+</html>

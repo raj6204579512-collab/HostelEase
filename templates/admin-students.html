@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Students - HostelEase</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+        .header {
+            height: 72px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #1d4ed8;
+        }
+
+        .admin {
+            color: #475569;
+        }
+
+        .main {
+            max-width: 1400px;
+            margin: auto;
+            padding: 40px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            color: #0f172a;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin: 0;
+        }
+
+        .back {
+            text-decoration: none;
+            background: #2563eb;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+        }
+
+        .search {
+            background: white;
+            padding: 20px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .search input {
+            width: 100%;
+            height: 45px;
+            padding: 0 14px;
+            border: 1px solid #dbe3ef;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search input:focus {
+            border-color: #2563eb;
+        }
+
+        .table-card {
+            background: white;
+            border-radius: 14px;
+            border: 1px solid #e5e7eb;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        th {
+            background: #eff6ff;
+            color: #1e3a8a;
+            padding: 16px;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 16px;
+            border-top: 1px solid #eef2f7;
+            font-size: 13px;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .name {
+            font-weight: bold;
+            color: #0f172a;
+        }
+
+        .enrollment {
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .status {
+            background: #dcfce7;
+            color: #166534;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 50px;
+            color: #64748b;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+    <div class="logo">
+        🏠 HostelEase
+    </div>
+
+    <div class="admin">
+        🛡️ Administrator
+    </div>
+
+</header>
+
+
+<main class="main">
+
+
+    <div class="top">
+
+        <div>
+
+            <h1>
+                👨‍🎓 Students
+            </h1>
+
+            <p class="subtitle">
+                View all registered hostel students.
+            </p>
+
+        </div>
+
+
+        <a
+            href="/admin/dashboard"
+            class="back"
+        >
+            ← Dashboard
+        </a>
+
+    </div>
+
+
+    <div class="search">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search student..."
+            onkeyup="searchStudents()"
+        >
+
+    </div>
+
+
+    <div class="table-card">
+
+
+        {% if students %}
+
+        <table id="studentTable">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Name</th>
+
+                    <th>Enrollment</th>
+
+                    <th>Email</th>
+
+                    <th>Department</th>
+
+                    <th>Year</th>
+
+                    <th>Phone</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for student in students %}
+
+                <tr>
+
+                    <td>
+                        {{ student.id }}
+                    </td>
+
+                    <td class="name">
+                        {{ student.name }}
+                    </td>
+
+                    <td class="enrollment">
+                        {{ student.roll_number }}
+                    </td>
+
+                    <td>
+                        {{ student.email }}
+                    </td>
+
+                    <td>
+                        {{ student.department or "-" }}
+                    </td>
+
+                    <td>
+                        {{ student.year or "-" }}
+                    </td>
+
+                    <td>
+                        {{ student.phone or "-" }}
+                    </td>
+
+                    <td>
+                        <span class="status">
+                            Active
+                        </span>
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+        {% else %}
+
+        <div class="empty">
+
+            <h3>
+                No Students Found
+            </h3>
+
+            <p>
+                Registered students will appear here.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+</main>
+
+
+<script>
+
+function searchStudents() {
+
+    let input =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    let table =
+        document
+        .getElementById("studentTable");
+
+    if (!table) {
+        return;
+    }
+
+    let rows =
+        table
+        .getElementsByTagName("tr");
+
+
+    for (
+        let i = 1;
+        i < rows.length;
+        i++
+    ) {
+
+        let text =
+            rows[i]
+            .textContent
+            .toLowerCase();
+
+
+        if (text.includes(input)) {
+
+            rows[i].style.display = "";
+
+        } else {
+
+            rows[i].style.display = "none";
+
+        }
+
+    }
+
+}
+
+</script>
+
+
+</body>
+
+</html>

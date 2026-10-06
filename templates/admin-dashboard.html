@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Dashboard - HostelEase</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f4f7fb;
+
+            color: #123b70;
+
+        }
+
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        .top-header {
+
+            height: 72px;
+
+            background: white;
+
+            border-bottom:
+                1px solid #dce4ed;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding:
+                0 42px;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            text-decoration: none;
+
+        }
+
+
+        .brand-icon {
+
+            font-size: 31px;
+
+        }
+
+
+        .brand-name {
+
+            font-size: 30px;
+
+            font-weight: 700;
+
+            color: #1760e8;
+
+        }
+
+
+        .admin-area {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+
+        }
+
+
+        .admin-name {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: #294d78;
+
+            font-size: 16px;
+
+            font-weight: 500;
+
+        }
+
+
+        /* =========================================
+           LOGOUT BUTTON
+        ========================================= */
+
+        .logout-btn {
+
+            background: #dc3545;
+
+            color: white;
+
+            text-decoration: none;
+
+            border: none;
+
+            border-radius: 8px;
+
+            padding:
+                10px 18px;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .logout-btn:hover {
+
+            background: #b92332;
+
+        }
+
+
+        /* =========================================
+           MAIN CONTAINER
+        ========================================= */
+
+        .container {
+
+            width: 90%;
+
+            max-width: 1320px;
+
+            margin:
+                55px auto;
+
+        }
+
+
+        .page-title {
+
+            font-size: 40px;
+
+            font-weight: 700;
+
+            color: #123f76;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .page-subtitle {
+
+            font-size: 18px;
+
+            color: #58708d;
+
+            margin-bottom: 38px;
+
+        }
+
+
+        /* =========================================
+           STATISTICS
+        ========================================= */
+
+        .stats-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 28px;
+
+            margin-bottom: 45px;
+
+        }
+
+
+        .stat-card {
+
+            background: white;
+
+            border:
+                1px solid #dce4ed;
+
+            border-radius: 18px;
+
+            padding: 32px;
+
+            min-height: 190px;
+
+            box-shadow:
+                0 5px 18px
+                rgba(18, 59, 112, 0.05);
+
+        }
+
+
+        .stat-icon {
+
+            font-size: 42px;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .stat-number {
+
+            font-size: 30px;
+
+            font-weight: 700;
+
+            color: #092e5d;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .stat-label {
+
+            font-size: 16px;
+
+            color: #526f91;
+
+        }
+
+
+        /* =========================================
+           SECTION TITLE
+        ========================================= */
+
+        .section-title {
+
+            font-size: 32px;
+
+            color: #123f76;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        /* =========================================
+           MANAGEMENT GRID
+        ========================================= */
+
+        .management-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 26px;
+
+        }
+
+
+        .service-card {
+
+            background: white;
+
+            border:
+                1px solid #dce4ed;
+
+            border-radius: 17px;
+
+            padding: 30px;
+
+            min-height: 190px;
+
+            text-decoration: none;
+
+            color: inherit;
+
+            display: block;
+
+            box-shadow:
+                0 5px 18px
+                rgba(18, 59, 112, 0.04);
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s;
+
+        }
+
+
+        .service-card:hover {
+
+            transform:
+                translateY(-4px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(18, 59, 112, 0.10);
+
+        }
+
+
+        .service-icon {
+
+            font-size: 38px;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .service-title {
+
+            font-size: 22px;
+
+            font-weight: 700;
+
+            color: #092e5d;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .service-description {
+
+            font-size: 16px;
+
+            line-height: 1.55;
+
+            color: #58708d;
+
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 1100px) {
+
+            .stats-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .management-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .top-header {
+
+                padding:
+                    0 18px;
+
+            }
+
+
+            .brand-name {
+
+                font-size: 23px;
+
+            }
+
+
+            .admin-name {
+
+                display: none;
+
+            }
+
+
+            .container {
+
+                width: 94%;
+
+                margin:
+                    30px auto;
+
+            }
+
+
+            .page-title {
+
+                font-size: 31px;
+
+            }
+
+
+            .stats-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .management-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         TOP HEADER
+    ========================================= -->
+
+    <header class="top-header">
+
+
+        <!-- BRAND -->
+
+        <a
+            href="/admin/dashboard"
+            class="brand"
+        >
+
+            <span class="brand-icon">
+                🏠
+            </span>
+
+            <span class="brand-name">
+                HostelEase
+            </span>
+
+        </a>
+
+
+        <!-- ADMIN AREA -->
+
+        <div class="admin-area">
+
+            <div class="admin-name">
+
+                <span>
+                    🛡️
+                </span>
+
+                <span>
+                    Administrator
+                </span>
+
+            </div>
+
+
+            <!-- ONLY TOP LOGOUT -->
+
+            <a
+                href="/admin/logout"
+                class="logout-btn"
+            >
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================================
+         MAIN
+    ========================================= -->
+
+    <main class="container">
+
+
+        <!-- PAGE TITLE -->
+
+        <h1 class="page-title">
+            Admin Dashboard 👋
+        </h1>
+
+
+        <p class="page-subtitle">
+            Manage students, rooms and hostel activities from one place.
+        </p>
+
+
+
+        <!-- =====================================
+             STATISTICS
+        ===================================== -->
+
+        <div class="stats-grid">
+
+
+            <!-- TOTAL STUDENTS -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🎓
+                </div>
+
+                <div class="stat-number">
+                    {{ total_students }}
+                </div>
+
+                <div class="stat-label">
+                    Total Students
+                </div>
+
+            </div>
+
+
+
+            <!-- TOTAL ROOMS -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🏠
+                </div>
+
+                <div class="stat-number">
+                    {{ total_rooms }}
+                </div>
+
+                <div class="stat-label">
+                    Total Rooms
+                </div>
+
+            </div>
+
+
+
+            <!-- ACTIVE ALLOCATIONS -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🔑
+                </div>
+
+                <div class="stat-number">
+                    {{ active_allocations }}
+                </div>
+
+                <div class="stat-label">
+                    Active Allocations
+                </div>
+
+            </div>
+
+
+
+            <!-- AVAILABLE ROOMS -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🟢
+                </div>
+
+                <div class="stat-number">
+                    {{ available_rooms }}
+                </div>
+
+                <div class="stat-label">
+                    Available Rooms
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================
+             HOSTEL MANAGEMENT
+        ===================================== -->
+
+        <h2 class="section-title">
+            Hostel Management
+        </h2>
+
+
+        <div class="management-grid">
+
+
+            <!-- =================================
+                 STUDENTS
+            ================================== -->
+
+            <a
+                href="/admin/students"
+                class="service-card"
+            >
+
+                <div class="service-icon">
+                    🎓
+                </div>
+
+                <div class="service-title">
+                    Students
+                </div>
+
+                <div class="service-description">
+                    View and manage all registered hostel students.
+                </div>
+
+            </a>
+
+
+
+            <!-- =================================
+                 ROOMS
+            ================================== -->
+
+            <a
+                href="/admin/rooms"
+                class="service-card"
+            >
+
+                <div class="service-icon">
+                    🏠
+                </div>
+
+                <div class="service-title">
+                    Rooms
+                </div>
+
+                <div class="service-description">
+                    Add and manage hostel rooms, capacity and availability.
+                </div>
+
+            </a>
+
+
+
+            <!-- =================================
+                 ROOM ALLOCATION
+            ================================== -->
+
+            <a
+                href="/admin/room-allocation"
+                class="service-card"
+            >
+
+                <div class="service-icon">
+                    🔑
+                </div>
+
+                <div class="service-title">
+                    Room Allocation
+                </div>
+
+                <div class="service-description">
+                    Assign available rooms to registered students.
+                </div>
+
+            </a>
+
+
+
+            <!-- =================================
+                 ROOM SWAP
+            ================================== -->
+
+            <a
+                href="/admin/room-swaps"
+                class="service-card"
+            >
+
+                <div class="service-icon">
+                    🔄
+                </div>
+
+                <div class="service-title">
+                    Room Swap
+                </div>
+
+                <div class="service-description">
+                    Manage student room swap requests.
+                </div>
+
+            </a>
+
+
+
+            <!-- =================================
+                 COMPLAINTS
+            ================================== -->
+
+            <a
+                href="/admin/complaints"
+                class="service-card"
+            >
+
+                <div class="service-icon">
+                    📄
+                </div>
+
+                <div class="service-title">
+                    Complaints
+                </div>
+
+                <div class="service-description">
+                    View, manage and resolve student complaints.
+                </div>
+
+            </a>
+
+
+
+            <!-- =================================
+                 FEES
+            ================================== -->
+
+            <a
+                href="/admin/fees"
+                class="service-card"
+            >
+
+                <div class="service-icon">
+                    💳
+                </div>
+
+                <div class="service-title">
+                    Fees
+                </div>
+
+                <div class="service-description">
+                    Create and manage student hostel fee records.
+                </div>
+
+            </a>
+
+
+
+            <!-- =================================
+                 PAYMENTS
+            ================================== -->
+
+            <a
+                href="/admin/payments"
+                class="service-card"
+            >
+
+                <div class="service-icon">
+                    💰
+                </div>
+
+                <div class="service-title">
+                    Payments
+                </div>
+
+                <div class="service-description">
+                    View student payments and transaction details.
+                </div>
+
+            </a>
+
+
+
+            <!-- =================================
+                 LEAVE REQUESTS
+            ================================== -->
+
+            <a
+                href="/admin/leave-requests"
+                class="service-card"
+            >
+
+                <div class="service-icon">
+                    📅
+                </div>
+
+                <div class="service-title">
+                    Leave Requests
+                </div>
+
+                <div class="service-description">
+                    Review and manage student leave requests.
+                </div>
+
+            </a>
+
+
+
+            <!-- =================================
+                 ANNOUNCEMENTS
+                 KEEP THIS
+            ================================== -->
+
+            <a
+                href="/admin/announcements"
+                class="service-card"
+            >
+
+                <div class="service-icon">
+                    📢
+                </div>
+
+                <div class="service-title">
+                    Announcements
+                </div>
+
+                <div class="service-description">
+                    Publish important hostel announcements for students.
+                </div>
+
+            </a>
+
+
+
+            <!-- =================================
+                 MESSAGES
+            ================================== -->
+
+            <a
+                href="/admin/messages"
+                class="service-card"
+            >
+
+                <div class="service-icon">
+                    💬
+                </div>
+
+                <div class="service-title">
+                    Messages
+                </div>
+
+                <div class="service-description">
+                    Communicate directly with registered students.
+                </div>
+
+            </a>
+
+
+
+            <!-- =================================
+                 REPORTS
+            ================================== -->
+
+            <a
+                href="/admin/reports"
+                class="service-card"
+            >
+
+                <div class="service-icon">
+                    📊
+                </div>
+
+                <div class="service-title">
+                    Reports
+                </div>
+
+                <div class="service-description">
+                    View hostel statistics, payments, complaints and reports.
+                </div>
+
+            </a>
+
+
+
+            <!-- =================================
+                 SETTINGS
+            ================================== -->
+
+            <a
+                href="/admin/settings"
+                class="service-card"
+            >
+
+                <div class="service-icon">
+                    ⚙️
+                </div>
+
+                <div class="service-title">
+                    Settings
+                </div>
+
+                <div class="service-description">
+                    Update administrator profile and password settings.
+                </div>
+
+            </a>
+
+
+        </div>
+
+
+    </main>
+
+
+</body>
+
+</html>

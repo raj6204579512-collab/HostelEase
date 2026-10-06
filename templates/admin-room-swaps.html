@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin - Room Swap Requests</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #333;
+        }
+
+        /* =========================
+           HEADER
+        ========================== */
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 20px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+        }
+
+        .header h1 {
+            font-size: 25px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: white;
+            background: rgba(255,255,255,0.15);
+            padding: 10px 18px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.28);
+        }
+
+        /* =========================
+           CONTAINER
+        ========================== */
+
+        .container {
+            width: 95%;
+            max-width: 1250px;
+            margin: 35px auto;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h2 {
+            font-size: 28px;
+            color: #1e3c72;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #666;
+            font-size: 15px;
+        }
+
+        /* =========================
+           ALERT
+        ========================== */
+
+        .alert {
+            padding: 14px 18px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .alert-success {
+            background: #dff5e4;
+            color: #176b2c;
+            border-left: 5px solid #28a745;
+        }
+
+        .alert-danger {
+            background: #fde2e2;
+            color: #a11a1a;
+            border-left: 5px solid #dc3545;
+        }
+
+        /* =========================
+           CARD
+        ========================== */
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .card-header h3 {
+            color: #1e3c72;
+            font-size: 21px;
+        }
+
+        .total-count {
+            background: #e9f0ff;
+            color: #1e3c72;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* =========================
+           TABLE
+        ========================== */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        thead {
+            background: #1e3c72;
+            color: white;
+        }
+
+        th {
+            padding: 15px 12px;
+            text-align: left;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        tbody tr {
+            transition: 0.2s;
+        }
+
+        tbody tr:hover {
+            background: #f8faff;
+        }
+
+        /* =========================
+           STUDENT INFO
+        ========================== */
+
+        .student-name {
+            font-weight: bold;
+            color: #222;
+            margin-bottom: 4px;
+        }
+
+        .student-email {
+            color: #777;
+            font-size: 12px;
+        }
+
+        /* =========================
+           REQUEST ID
+        ========================== */
+
+        .request-id {
+            display: inline-block;
+            background: #eef2ff;
+            color: #1e3c72;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           MESSAGE
+        ========================== */
+
+        .message {
+            max-width: 230px;
+            line-height: 1.5;
+            color: #555;
+            word-wrap: break-word;
+        }
+
+        .no-message {
+            color: #999;
+            font-style: italic;
+        }
+
+        /* =========================
+           STATUS
+        ========================== */
+
+        .status {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+
+        .status.pending {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffe69c;
+        }
+
+        .status.approved {
+            background: #d1e7dd;
+            color: #0f5132;
+            border: 1px solid #a3cfbb;
+        }
+
+        .status.rejected {
+            background: #f8d7da;
+            color: #842029;
+            border: 1px solid #f1aeb5;
+        }
+
+        .status.unknown {
+            background: #e2e3e5;
+            color: #41464b;
+            border: 1px solid #d3d6d8;
+        }
+
+        /* =========================
+           ACTION BUTTONS
+        ========================== */
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            border: none;
+            padding: 8px 13px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .approve-btn {
+            background: #198754;
+            color: white;
+        }
+
+        .approve-btn:hover {
+            background: #146c43;
+            transform: translateY(-1px);
+        }
+
+        .reject-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .reject-btn:hover {
+            background: #bb2d3b;
+            transform: translateY(-1px);
+        }
+
+        .completed {
+            color: #777;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           EMPTY STATE
+        ========================== */
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .empty-state h3 {
+            color: #444;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            color: #888;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 768px) {
+
+            .header {
+                padding: 18px;
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .container {
+                width: 94%;
+                margin: 25px auto;
+            }
+
+            .page-title h2 {
+                font-size: 23px;
+            }
+
+            .card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <div class="header">
+
+        <h1>🔄 Room Swap Management</h1>
+
+        <a href="{{ url_for('admin_dashboard') }}" class="back-btn">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN CONTAINER
+    ========================== -->
+
+    <div class="container">
+
+        <div class="page-title">
+
+            <h2>Room Swap Requests</h2>
+
+            <p>
+                Review and manage room swap requests submitted by students.
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             FLASH MESSAGES
+        ========================== -->
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div class="alert
+                        {% if category == 'success' %}
+                            alert-success
+                        {% else %}
+                            alert-danger
+                        {% endif %}
+                    ">
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- =========================
+             ROOM SWAP CARD
+        ========================== -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h3>All Swap Requests</h3>
+
+                <div class="total-count">
+                    Total Requests:
+                    {{ swap_requests|length }}
+                </div>
+
+            </div>
+
+
+            {% if swap_requests and swap_requests|length > 0 %}
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Requester</th>
+
+                            <th>Target Student</th>
+
+                            <th>Message</th>
+
+                            <th>Date</th>
+
+                            <th>Status</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for swap in swap_requests %}
+
+                            <tr>
+
+                                <!-- =====================
+                                     REQUEST ID
+                                ====================== -->
+
+                                <td>
+
+                                    <span class="request-id">
+                                        #{{ swap.id }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- =====================
+                                     REQUESTER
+                                ====================== -->
+
+                                <td>
+
+                                    {% if swap.requester %}
+
+                                        <div class="student-name">
+                                            {{ swap.requester.full_name }}
+                                        </div>
+
+                                        {% if swap.requester.email %}
+
+                                            <div class="student-email">
+                                                {{ swap.requester.email }}
+                                            </div>
+
+                                        {% endif %}
+
+                                    {% else %}
+
+                                        <div class="student-name">
+                                            Unknown Student
+                                        </div>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- =====================
+                                     TARGET STUDENT
+                                ====================== -->
+
+                                <td>
+
+                                    {% if swap.target_student %}
+
+                                        <div class="student-name">
+                                            {{ swap.target_student.full_name }}
+                                        </div>
+
+                                        {% if swap.target_student.email %}
+
+                                            <div class="student-email">
+                                                {{ swap.target_student.email }}
+                                            </div>
+
+                                        {% endif %}
+
+                                    {% else %}
+
+                                        <div class="student-name">
+                                            Unknown Student
+                                        </div>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- =====================
+                                     MESSAGE
+                                ====================== -->
+
+                                <td>
+
+                                    {% if swap.message %}
+
+                                        <div class="message">
+                                            {{ swap.message }}
+                                        </div>
+
+                                    {% else %}
+
+                                        <div class="no-message">
+                                            No message
+                                        </div>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- =====================
+                                     DATE
+                                ====================== -->
+
+                                <td>
+
+                                    {% if swap.created_at %}
+
+                                        {{ swap.created_at.strftime('%d-%m-%Y') }}
+
+                                        <br>
+
+                                        <small style="color:#888;">
+                                            {{ swap.created_at.strftime('%I:%M %p') }}
+                                        </small>
+
+                                    {% else %}
+
+                                        <span style="color:#999;">
+                                            —
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- =====================
+                                     STATUS
+                                     IMPORTANT FIX
+                                ====================== -->
+
+                                <td>
+
+                                    {% set current_status = swap.status|default('pending', true)|lower|trim %}
+
+
+                                    {% if current_status == 'pending' %}
+
+                                        <span class="status pending">
+                                            Pending
+                                        </span>
+
+
+                                    {% elif current_status == 'approved' %}
+
+                                        <span class="status approved">
+                                            Approved
+                                        </span>
+
+
+                                    {% elif current_status == 'rejected' %}
+
+                                        <span class="status rejected">
+                                            Rejected
+                                        </span>
+
+
+                                    {% else %}
+
+                                        <span class="status unknown">
+                                            {{ current_status|capitalize }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- =====================
+                                     ACTION
+                                ====================== -->
+
+                                <td>
+
+                                    {% if current_status == 'pending' %}
+
+                                        <div class="actions">
+
+
+                                            <!-- APPROVE -->
+
+                                            <form
+                                                method="POST"
+                                                action="{{ url_for('approve_room_swap', swap_id=swap.id) }}"
+                                                onsubmit="return confirm('Are you sure you want to approve this room swap request?');"
+                                            >
+
+                                                <button
+                                                    type="submit"
+                                                    class="action-btn approve-btn"
+                                                >
+                                                    ✓ Approve
+                                                </button>
+
+                                            </form>
+
+
+                                            <!-- REJECT -->
+
+                                            <form
+                                                method="POST"
+                                                action="{{ url_for('reject_room_swap', swap_id=swap.id) }}"
+                                                onsubmit="return confirm('Are you sure you want to reject this room swap request?');"
+                                            >
+
+                                                <button
+                                                    type="submit"
+                                                    class="action-btn reject-btn"
+                                                >
+                                                    ✕ Reject
+                                                </button>
+
+                                            </form>
+
+                                        </div>
+
+
+                                    {% elif current_status == 'approved' %}
+
+                                        <span class="completed">
+                                            ✓ Completed
+                                        </span>
+
+
+                                    {% elif current_status == 'rejected' %}
+
+                                        <span class="completed">
+                                            ✕ Rejected
+                                        </span>
+
+
+                                    {% else %}
+
+                                        <span class="completed">
+                                            Completed
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+
+            {% else %}
+
+
+                <!-- =========================
+                     NO REQUESTS
+                ========================== -->
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        🔄
+                    </div>
+
+                    <h3>No Room Swap Requests</h3>
+
+                    <p>
+                        There are currently no room swap requests from students.
+                    </p>
+
+                </div>
+
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         SMALL JS
+    ========================== -->
+
+    <script>
+
+        // Automatically hide flash messages
+        // after 5 seconds.
+
+        setTimeout(function () {
+
+            const alerts = document.querySelectorAll('.alert');
+
+            alerts.forEach(function (alert) {
+
+                alert.style.transition = "opacity 0.5s";
+
+                alert.style.opacity = "0";
+
+                setTimeout(function () {
+
+                    alert.remove();
+
+                }, 500);
+
+            });
+
+        }, 5000);
+
+    </script>
+
+</body>
+</html>

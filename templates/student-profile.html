@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile - HostelEase</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #123b70;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1150px;
+            margin: 40px auto;
+        }
+
+        .page-title {
+            font-size: 42px;
+            font-weight: 700;
+            color: #064b91;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #58708d;
+            margin-bottom: 30px;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 22px;
+            padding: 38px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #dfe5ec;
+            margin-bottom: 30px;
+        }
+
+        .profile-icon {
+            width: 105px;
+            height: 105px;
+            border-radius: 50%;
+            background: #dceaff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 52px;
+        }
+
+        .profile-name {
+            font-size: 32px;
+            font-weight: 700;
+            color: #063f7a;
+            margin-bottom: 8px;
+        }
+
+        .profile-role {
+            font-size: 18px;
+            color: #58708d;
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: #064b91;
+            margin: 25px 0 18px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            background: #f8fafc;
+            border: 1px solid #dce3eb;
+            border-radius: 14px;
+            padding: 16px 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: #58708d;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            border: 1px solid #ccd7e3;
+            border-radius: 9px;
+            padding: 12px;
+            font-size: 16px;
+            color: #123b70;
+            background: white;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #12559b;
+            box-shadow: 0 0 0 3px rgba(18, 85, 155, 0.10);
+        }
+
+        .readonly-box {
+            width: 100%;
+            padding: 12px;
+            border-radius: 9px;
+            background: #edf1f5;
+            color: #52677f;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 9px;
+            padding: 13px 22px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #124b89;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0c3b6e;
+        }
+
+        .btn-secondary {
+            background: #edf2f7;
+            color: #123b70;
+        }
+
+        .btn-danger {
+            background: #f0f3f7;
+            color: #123b70;
+        }
+
+        .password-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #dfe5ec;
+        }
+
+        .password-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .flash-message {
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .flash-success {
+            background: #e7f7ed;
+            color: #176b39;
+            border: 1px solid #b8e4c8;
+        }
+
+        .flash-error {
+            background: #fdeaea;
+            color: #a12626;
+            border: 1px solid #f2bcbc;
+        }
+
+        @media (max-width: 800px) {
+
+            .container {
+                width: 95%;
+                margin: 20px auto;
+            }
+
+            .profile-card {
+                padding: 22px;
+            }
+
+            .form-grid,
+            .password-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .page-title {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 class="page-title">My Profile</h1>
+
+    <p class="subtitle">
+        View and update your HostelEase student account information.
+    </p>
+
+    <!-- FLASH MESSAGES -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="flash-message
+                    {% if category == 'success' %}
+                        flash-success
+                    {% else %}
+                        flash-error
+                    {% endif %}
+                ">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <div class="profile-card">
+
+        <!-- PROFILE HEADER -->
+
+        <div class="profile-header">
+
+            <div class="profile-icon">
+                👤
+            </div>
+
+            <div>
+
+                <div class="profile-name">
+                    {{ student.name }}
+                </div>
+
+                <div class="profile-role">
+                    Student Account
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ============================= -->
+        <!-- EDIT PROFILE -->
+        <!-- ============================= -->
+
+        <h2 class="section-title">
+            Edit Profile
+        </h2>
+
+        <form
+            method="POST"
+            action="{{ url_for('student_profile') }}"
+        >
+
+            <input
+                type="hidden"
+                name="action"
+                value="update_profile"
+            >
+
+
+            <div class="form-grid">
+
+                <!-- FULL NAME -->
+
+                <div class="form-group">
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        value="{{ student.name or '' }}"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        value="{{ student.email or '' }}"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ROLL NUMBER -->
+
+                <div class="form-group">
+
+                    <label>
+                        Roll Number
+                    </label>
+
+                    <div class="readonly-box">
+                        {{ student.roll_number or 'Not available' }}
+                    </div>
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Phone
+                    </label>
+
+                    <input
+                        type="text"
+                        name="phone"
+                        value="{{ student.phone or '' }}"
+                    >
+
+                </div>
+
+
+                <!-- GENDER -->
+
+                <div class="form-group">
+
+                    <label>
+                        Gender
+                    </label>
+
+                    <select name="gender">
+
+                        <option value="">
+                            Select Gender
+                        </option>
+
+                        <option
+                            value="Male"
+                            {% if student.gender == 'Male' %}
+                                selected
+                            {% endif %}
+                        >
+                            Male
+                        </option>
+
+                        <option
+                            value="Female"
+                            {% if student.gender == 'Female' %}
+                                selected
+                            {% endif %}
+                        >
+                            Female
+                        </option>
+
+                        <option
+                            value="Other"
+                            {% if student.gender == 'Other' %}
+                                selected
+                            {% endif %}
+                        >
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- DEPARTMENT -->
+
+                <div class="form-group">
+
+                    <label>
+                        Department
+                    </label>
+
+                    <input
+                        type="text"
+                        name="department"
+                        value="{{ student.department or '' }}"
+                    >
+
+                </div>
+
+
+                <!-- YEAR -->
+
+                <div class="form-group">
+
+                    <label>
+                        Year
+                    </label>
+
+                    <select name="year">
+
+                        <option value="">
+                            Select Year
+                        </option>
+
+                        <option
+                            value="1"
+                            {% if student.year == 1 %}
+                                selected
+                            {% endif %}
+                        >
+                            1st Year
+                        </option>
+
+                        <option
+                            value="2"
+                            {% if student.year == 2 %}
+                                selected
+                            {% endif %}
+                        >
+                            2nd Year
+                        </option>
+
+                        <option
+                            value="3"
+                            {% if student.year == 3 %}
+                                selected
+                            {% endif %}
+                        >
+                            3rd Year
+                        </option>
+
+                        <option
+                            value="4"
+                            {% if student.year == 4 %}
+                                selected
+                            {% endif %}
+                        >
+                            4th Year
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- ACCOUNT ROLE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Account Role
+                    </label>
+
+                    <div class="readonly-box">
+                        {{ student.role }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="button-row">
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Save Profile Changes
+                </button>
+
+                <a
+                    href="{{ url_for('student_dashboard') }}"
+                    class="btn btn-secondary"
+                >
+                    ← Back to Dashboard
+                </a>
+
+                <a
+                    href="{{ url_for('student_logout') }}"
+                    class="btn btn-danger"
+                >
+                    Logout
+                </a>
+
+            </div>
+
+        </form>
+
+
+        <!-- ============================= -->
+        <!-- CHANGE PASSWORD -->
+        <!-- ============================= -->
+
+        <div class="password-section">
+
+            <h2 class="section-title">
+                Change Password
+            </h2>
+
+            <form
+                method="POST"
+                action="{{ url_for('student_profile') }}"
+            >
+
+                <input
+                    type="hidden"
+                    name="action"
+                    value="change_password"
+                >
+
+
+                <div class="password-grid">
+
+                    <div class="form-group">
+
+                        <label>
+                            Current Password
+                        </label>
+
+                        <input
+                            type="password"
+                            name="current_password"
+                            placeholder="Enter current password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            New Password
+                        </label>
+
+                        <input
+                            type="password"
+                            name="new_password"
+                            placeholder="Enter new password"
+                            minlength="6"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Confirm New Password
+                        </label>
+
+                        <input
+                            type="password"
+                            name="confirm_password"
+                            placeholder="Confirm new password"
+                            minlength="6"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="button-row">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Change Password
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

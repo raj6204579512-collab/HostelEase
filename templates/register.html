@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Student Registration | HostelEase</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="register-body">
+
+    <div class="register-wrapper">
+
+        <!-- LEFT SECTION -->
+
+        <div class="register-left">
+
+            <div class="register-brand">
+
+                <div class="brand-icon">
+                    🏠
+                </div>
+
+                <div>
+
+                    <h2>HostelEase</h2>
+
+                    <p>
+                        Smart Hostel Management System
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="register-left-content">
+
+                <span class="small-badge">
+                    🎓 Student Portal
+                </span>
+
+                <h1>
+                    Create Your
+                    <span>Student Account</span>
+                </h1>
+
+                <p>
+                    Join HostelEase and manage your hostel
+                    life easily from one simple platform.
+                </p>
+
+
+                <div class="benefits">
+
+                    <div class="benefit">
+
+                        <div class="benefit-icon">
+                            🛏️
+                        </div>
+
+                        <div>
+                            <h3>Room Management</h3>
+                            <p>
+                                Manage your room and allocation
+                                requests easily.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="benefit">
+
+                        <div class="benefit-icon">
+                            🔄
+                        </div>
+
+                        <div>
+                            <h3>Room Swap</h3>
+                            <p>
+                                Request room swaps with other
+                                hostel students.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="benefit">
+
+                        <div class="benefit-icon">
+                            📢
+                        </div>
+
+                        <div>
+                            <h3>Complaints & Support</h3>
+                            <p>
+                                Report hostel problems and
+                                get support from administration.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="benefit">
+
+                        <div class="benefit-icon">
+                            🔔
+                        </div>
+
+                        <div>
+                            <h3>Important Notices</h3>
+                            <p>
+                                Stay updated with hostel
+                                announcements and notices.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="left-footer">
+
+                © 2026 HostelEase
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SECTION -->
+
+        <div class="register-right">
+
+            <div class="register-card">
+
+                <div class="form-header">
+
+                    <div class="form-icon">
+                        🎓
+                    </div>
+
+                    <div>
+
+                        <h1>
+                            Student Registration
+                        </h1>
+
+                        <p>
+                            Create your HostelEase account
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                {% with messages = get_flashed_messages() %}
+
+                    {% if messages %}
+
+                        <div class="flash-message">
+
+                            {% for message in messages %}
+
+                                <p>{{ message }}</p>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+                {% endwith %}
+
+
+                <form
+                    action="/register"
+                    method="POST"
+                >
+
+                    <div class="form-grid">
+
+
+                        <!-- FULL NAME -->
+
+                        <div class="input-group">
+
+                            <label>
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="Enter your full name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- ROLL NUMBER -->
+
+                        <div class="input-group">
+
+                            <label>
+                                Roll Number
+                            </label>
+
+                            <input
+                                type="text"
+                                name="roll_number"
+                                placeholder="Enter roll number"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+
+                        <div class="input-group">
+
+                            <label>
+                                Email Address
+                            </label>
+
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="Enter your email"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- PHONE -->
+
+                        <div class="input-group">
+
+                            <label>
+                                Phone Number
+                            </label>
+
+                            <input
+                                type="tel"
+                                name="phone"
+                                placeholder="Enter phone number"
+                            >
+
+                        </div>
+
+
+                        <!-- GENDER -->
+
+                        <div class="input-group">
+
+                            <label>
+                                Gender
+                            </label>
+
+                            <select name="gender">
+
+                                <option value="">
+                                    Select Gender
+                                </option>
+
+                                <option value="Male">
+                                    Male
+                                </option>
+
+                                <option value="Female">
+                                    Female
+                                </option>
+
+                                <option value="Other">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- DEPARTMENT -->
+
+                        <div class="input-group">
+
+                            <label>
+                                Department
+                            </label>
+
+                            <input
+                                type="text"
+                                name="department"
+                                placeholder="Example: Computer Science"
+                            >
+
+                        </div>
+
+
+                        <!-- YEAR -->
+
+                        <div class="input-group">
+
+                            <label>
+                                Year
+                            </label>
+
+                            <select name="year">
+
+                                <option value="">
+                                    Select Year
+                                </option>
+
+                                <option value="1">
+                                    1st Year
+                                </option>
+
+                                <option value="2">
+                                    2nd Year
+                                </option>
+
+                                <option value="3">
+                                    3rd Year
+                                </option>
+
+                                <option value="4">
+                                    4th Year
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- PASSWORD -->
+
+                        <div class="input-group">
+
+                            <label>
+                                Password
+                            </label>
+
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="Create a password"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- CONFIRM PASSWORD -->
+
+                        <div class="input-group full-width">
+
+                            <label>
+                                Confirm Password
+                            </label>
+
+                            <input
+                                type="password"
+                                name="confirm_password"
+                                placeholder="Confirm your password"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <label class="terms">
+
+                        <input
+                            type="checkbox"
+                            required
+                        >
+
+                        <span>
+                            I agree to the HostelEase
+                            <a href="#">
+                                Terms & Conditions
+                            </a>
+                        </span>
+
+                    </label>
+
+
+                    <button
+                        type="submit"
+                        class="create-account-btn"
+                    >
+
+                        Create Student Account
+
+                        <span>→</span>
+
+                    </button>
+
+                </form>
+
+
+                <div class="login-divider">
+
+                    <span></span>
+
+                    OR
+
+                    <span></span>
+
+                </div>
+
+
+                <p class="already-account">
+
+                    Already have an account?
+
+                    <a href="/login">
+                        Student Login
+                    </a>
+
+                </p>
+
+
+                <a
+                    href="/"
+                    class="back-home"
+                >
+                    ← Back to Home
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>HostelEase - Smart Hostel Management</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background:
+                radial-gradient(
+                    circle at 10% 20%,
+                    rgba(0, 119, 255, 0.20),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 30%,
+                    rgba(0, 220, 190, 0.18),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #06152f 0%,
+                    #09264a 45%,
+                    #075b66 100%
+                );
+
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+
+        /* =========================
+           BACKGROUND DECORATIONS
+        ========================= */
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border: 1px solid rgba(0, 183, 255, 0.15);
+            border-radius: 50%;
+            left: -250px;
+            top: 180px;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border: 1px solid rgba(0, 255, 210, 0.12);
+            border-radius: 50%;
+            right: -300px;
+            bottom: -250px;
+            pointer-events: none;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            width: 100%;
+            padding: 25px 6%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            position: relative;
+            z-index: 10;
+        }
+
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+
+        .logo-icon {
+            width: 52px;
+            height: 52px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 28px;
+
+            background: linear-gradient(
+                135deg,
+                #087cff,
+                #00d8c3
+            );
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 0 25px rgba(0, 168, 255, 0.35);
+        }
+
+
+        .logo-section h2 {
+            font-size: 26px;
+            font-weight: 750;
+            letter-spacing: -0.5px;
+        }
+
+
+        .logo-section h2 span {
+            color: #25c7ff;
+        }
+
+
+        .logo-section p {
+            color: #a7c7e8;
+            font-size: 13px;
+            margin-top: 2px;
+        }
+
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+
+        .system-badge {
+            padding: 10px 18px;
+
+            border: 1px solid rgba(0, 220, 255, 0.4);
+
+            border-radius: 30px;
+
+            background: rgba(0, 100, 150, 0.12);
+
+            color: #5de9ff;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            width: 100%;
+            min-height: calc(100vh - 100px);
+
+            padding:
+                45px 7%
+                70px;
+
+            position: relative;
+            z-index: 2;
+        }
+
+
+        .hero-top {
+            text-align: center;
+            max-width: 950px;
+            margin: 0 auto 42px;
+        }
+
+
+        .top-badge {
+            display: inline-flex;
+
+            padding: 9px 22px;
+
+            border: 1px solid rgba(0, 206, 255, 0.35);
+
+            border-radius: 30px;
+
+            background: rgba(0, 160, 200, 0.10);
+
+            color: #32e5e2;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            letter-spacing: 0.7px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .hero-top h1 {
+            font-size: clamp(50px, 6vw, 82px);
+
+            line-height: 0.98;
+
+            font-weight: 800;
+
+            letter-spacing: -3px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .hero-top h1 span {
+            display: block;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #1ea7ff,
+                    #00d9dc
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+
+            text-shadow:
+                0 0 35px rgba(0, 190, 255, 0.15);
+        }
+
+
+        .hero-description {
+            max-width: 760px;
+
+            margin: auto;
+
+            color: #b9d2ed;
+
+            font-size: 18px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================
+           ROLE CARDS
+        ========================= */
+
+        .role-container {
+            max-width: 1050px;
+
+            margin: 0 auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 30px;
+        }
+
+
+        .role-card {
+            position: relative;
+
+            padding: 34px;
+
+            min-height: 390px;
+
+            border-radius: 25px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(15, 47, 83, 0.80),
+                    rgba(5, 25, 54, 0.65)
+                );
+
+            backdrop-filter: blur(18px);
+
+            border: 1px solid
+                rgba(120, 190, 255, 0.18);
+
+            box-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, 0.25);
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+
+        .role-card:hover {
+            transform: translateY(-8px);
+
+            box-shadow:
+                0 30px 80px
+                rgba(0, 0, 0, 0.4);
+        }
+
+
+        .student-card {
+            border-color:
+                rgba(0, 172, 255, 0.55);
+        }
+
+
+        .admin-card {
+            border-color:
+                rgba(164, 67, 255, 0.55);
+        }
+
+
+        .card-dots {
+            position: absolute;
+
+            right: 25px;
+            top: 22px;
+
+            color: #4dbfff;
+
+            font-size: 20px;
+
+            letter-spacing: 4px;
+        }
+
+
+        .admin-card .card-dots {
+            color: #b96cff;
+        }
+
+
+        .role-icon {
+            width: 64px;
+            height: 64px;
+
+            border-radius: 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 31px;
+
+            margin-bottom: 23px;
+        }
+
+
+        .student-icon {
+            background:
+                linear-gradient(
+                    135deg,
+                    #087cff,
+                    #19b9ff
+                );
+
+            box-shadow:
+                0 10px 35px
+                rgba(0, 130, 255, 0.35);
+        }
+
+
+        .admin-icon {
+            background:
+                linear-gradient(
+                    135deg,
+                    #792dff,
+                    #bd3cff
+                );
+
+            box-shadow:
+                0 10px 35px
+                rgba(150, 40, 255, 0.35);
+        }
+
+
+        .role-card h2 {
+            font-size: 27px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .role-card .subtitle {
+            color: #b8d3ec;
+
+            font-size: 15px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .role-list {
+            list-style: none;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 13px;
+
+            margin-bottom: 27px;
+        }
+
+
+        .role-list li {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            color: #d6e7f7;
+
+            font-size: 14px;
+        }
+
+
+        .check {
+            width: 22px;
+            height: 22px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 12px;
+
+            flex-shrink: 0;
+        }
+
+
+        .student-card .check {
+            background: rgba(0, 151, 255, 0.20);
+            color: #35b7ff;
+        }
+
+
+        .admin-card .check {
+            background: rgba(165, 57, 255, 0.20);
+            color: #c277ff;
+        }
+
+
+        .role-button {
+            width: 100%;
+
+            border: none;
+
+            padding: 15px 20px;
+
+            border-radius: 12px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 10px;
+
+            transition: 0.25s;
+
+            cursor: pointer;
+        }
+
+
+        .student-button {
+            background:
+                linear-gradient(
+                    90deg,
+                    #087cff,
+                    #16aefc
+                );
+
+            box-shadow:
+                0 10px 30px
+                rgba(0, 126, 255, 0.25);
+        }
+
+
+        .admin-button {
+            background:
+                linear-gradient(
+                    90deg,
+                    #7b2cff,
+                    #a83dff
+                );
+
+            box-shadow:
+                0 10px 30px
+                rgba(133, 44, 255, 0.25);
+        }
+
+
+        .role-button:hover {
+            transform: translateY(-2px);
+
+            filter: brightness(1.12);
+        }
+
+
+        /* =========================
+           BOTTOM FEATURES
+        ========================= */
+
+        .quick-features {
+            max-width: 1050px;
+
+            margin: 45px auto 0;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+        }
+
+
+        .quick-card {
+            padding: 18px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(255, 255, 255, 0.045);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+            text-align: center;
+        }
+
+
+        .quick-card .icon {
+            font-size: 23px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .quick-card h3 {
+            font-size: 14px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .quick-card p {
+            font-size: 12px;
+
+            color: #9db9d4;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+
+            padding: 25px;
+
+            color: #7795b3;
+
+            font-size: 13px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.06);
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 850px) {
+
+            .navbar {
+                padding: 20px 5%;
+            }
+
+            .system-badge {
+                display: none;
+            }
+
+            .hero {
+                padding: 35px 5% 50px;
+            }
+
+            .hero-top h1 {
+                font-size: 52px;
+            }
+
+            .role-container {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+            }
+
+            .quick-features {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 500px) {
+
+            .logo-section p {
+                display: none;
+            }
+
+            .logo-section h2 {
+                font-size: 21px;
+            }
+
+            .logo-icon {
+                width: 45px;
+                height: 45px;
+            }
+
+            .hero-top h1 {
+                font-size: 42px;
+                letter-spacing: -2px;
+            }
+
+            .hero-description {
+                font-size: 15px;
+            }
+
+            .role-card {
+                padding: 25px;
+            }
+
+            .quick-features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<header class="navbar">
+
+    <div class="logo-section">
+
+        <div class="logo-icon">
+            🏠
+        </div>
+
+        <div>
+
+            <h2>Hostel<span>Ease</span></h2>
+
+            <p>
+                Smart Hostel Management System
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="nav-right">
+
+        <div class="system-badge">
+
+            ● Smart Hostel Management
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+     MAIN HERO
+========================= -->
+
+<main class="hero">
+
+
+    <section class="hero-top">
+
+        <div class="top-badge">
+
+            🎓 &nbsp; SMART • SECURE • SIMPLE
+
+        </div>
+
+
+        <h1>
+
+            Your Hostel Life,
+
+            <span>Simplified</span>
+
+        </h1>
+
+
+        <p class="hero-description">
+
+            A complete hostel management platform where
+            students and administrators can manage hostel
+            life easily, securely and efficiently.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- =========================
+         ROLE CARDS
+    ========================= -->
+
+    <section class="role-container">
+
+
+        <!-- STUDENT -->
+
+        <div class="role-card student-card">
+
+            <div class="card-dots">
+                •••
+            </div>
+
+
+            <div class="role-icon student-icon">
+                🎓
+            </div>
+
+
+            <h2>
+                Student
+            </h2>
+
+
+            <p class="subtitle">
+
+                Manage your hostel life with ease.
+
+            </p>
+
+
+            <ul class="role-list">
+
+                <li>
+
+                    <span class="check">
+                        ✓
+                    </span>
+
+                    View room details
+
+                </li>
+
+
+                <li>
+
+                    <span class="check">
+                        ✓
+                    </span>
+
+                    Request room swap
+
+                </li>
+
+
+                <li>
+
+                    <span class="check">
+                        ✓
+                    </span>
+
+                    Raise complaints
+
+                </li>
+
+
+                <li>
+
+                    <span class="check">
+                        ✓
+                    </span>
+
+                    View & pay fees
+
+                </li>
+
+
+                <li>
+
+                    <span class="check">
+                        ✓
+                    </span>
+
+                    Check hostel notices
+
+                </li>
+
+            </ul>
+
+
+            <a
+                href="/login"
+                class="role-button student-button"
+            >
+
+                Enter as Student
+
+                <span>→</span>
+
+            </a>
+
+        </div>
+
+
+
+        <!-- HOSTEL ADMIN -->
+
+        <div class="role-card admin-card">
+
+            <div class="card-dots">
+                •••
+            </div>
+
+
+            <div class="role-icon admin-icon">
+                🏢
+            </div>
+
+
+            <h2>
+                Hostel Admin
+            </h2>
+
+
+            <p class="subtitle">
+
+                Manage students, rooms and operations.
+
+            </p>
+
+
+            <ul class="role-list">
+
+                <li>
+
+                    <span class="check">
+                        ✓
+                    </span>
+
+                    Manage student records
+
+                </li>
+
+
+                <li>
+
+                    <span class="check">
+                        ✓
+                    </span>
+
+                    Allocate & manage rooms
+
+                </li>
+
+
+                <li>
+
+                    <span class="check">
+                        ✓
+                    </span>
+
+                    Handle complaints
+
+                </li>
+
+
+                <li>
+
+                    <span class="check">
+                        ✓
+                    </span>
+
+                    Manage payments
+
+                </li>
+
+
+                <li>
+
+                    <span class="check">
+                        ✓
+                    </span>
+
+                    Post hostel notices
+
+                </li>
+
+            </ul>
+
+
+            <a
+                href="/admin/login"
+                class="role-button admin-button"
+            >
+
+                Enter as Admin
+
+                <span>→</span>
+
+            </a>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =========================
+         QUICK FEATURES
+    ========================= -->
+
+    <section class="quick-features">
+
+
+        <div class="quick-card">
+
+            <div class="icon">
+                🛏️
+            </div>
+
+            <h3>
+                Room Management
+            </h3>
+
+            <p>
+                Easy room allocation
+            </p>
+
+        </div>
+
+
+
+        <div class="quick-card">
+
+            <div class="icon">
+                🔄
+            </div>
+
+            <h3>
+                Room Swap
+            </h3>
+
+            <p>
+                Simple swap requests
+            </p>
+
+        </div>
+
+
+
+        <div class="quick-card">
+
+            <div class="icon">
+                💬
+            </div>
+
+            <h3>
+                Communication
+            </h3>
+
+            <p>
+                Student & admin messages
+            </p>
+
+        </div>
+
+
+
+        <div class="quick-card">
+
+            <div class="icon">
+                🔔
+            </div>
+
+            <h3>
+                Hostel Notices
+            </h3>
+
+            <p>
+                Stay updated
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    © 2026 HostelEase
+    |
+    Smart Hostel Management System
+
+</footer>
+
+
+</body>
+
+</html>

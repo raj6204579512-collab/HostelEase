@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Student Messages - HostelEase</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f4f7fb;
+
+            color: #173b6d;
+
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .header {
+
+            height: 78px;
+
+            background: white;
+
+            border-bottom:
+                1px solid #dce5ef;
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            padding:
+                0 35px;
+
+        }
+
+
+        .logo {
+
+            font-size: 29px;
+
+            font-weight: 700;
+
+            color: #2864df;
+
+        }
+
+
+        .student-name {
+
+            font-size: 16px;
+
+            font-weight: 600;
+
+            color: #28486c;
+
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .container {
+
+            max-width: 1150px;
+
+            margin: auto;
+
+            padding:
+                45px 25px;
+
+        }
+
+
+        .top-section {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            margin-bottom: 28px;
+
+        }
+
+
+        .title-area h1 {
+
+            font-size: 35px;
+
+            color: #102f61;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .title-area p {
+
+            font-size: 17px;
+
+            color: #607b9d;
+
+        }
+
+
+        .dashboard-btn {
+
+            text-decoration: none;
+
+            background: #2864df;
+
+            color: white;
+
+            padding:
+                13px 25px;
+
+            border-radius: 9px;
+
+            font-weight: 700;
+
+        }
+
+
+        .dashboard-btn:hover {
+
+            background: #174fca;
+
+        }
+
+
+        /* ================= FLASH ================= */
+
+        .flash {
+
+            padding: 14px 18px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            font-weight: 600;
+
+        }
+
+
+        .flash.success {
+
+            background: #dcfce7;
+
+            color: #166534;
+
+            border:
+                1px solid #86efac;
+
+        }
+
+
+        .flash.error {
+
+            background: #fee2e2;
+
+            color: #991b1b;
+
+            border:
+                1px solid #fca5a5;
+
+        }
+
+
+        /* ================= CHAT CARD ================= */
+
+        .chat-card {
+
+            background: white;
+
+            border:
+                1px solid #dce5ef;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(30, 70, 120, 0.06);
+
+        }
+
+
+        .chat-heading {
+
+            font-size: 25px;
+
+            font-weight: 700;
+
+            color: #102f61;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        /* ================= MESSAGES ================= */
+
+        .messages-box {
+
+            border:
+                1px solid #dce5ef;
+
+            border-radius: 14px;
+
+            background: #f8fbff;
+
+            padding: 20px;
+
+            min-height: 260px;
+
+            max-height: 480px;
+
+            overflow-y: auto;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .message-row {
+
+            display: flex;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .message-row.student {
+
+            justify-content: flex-end;
+
+        }
+
+
+        .message-row.admin {
+
+            justify-content: flex-start;
+
+        }
+
+
+        .message-bubble {
+
+            max-width: 70%;
+
+            padding:
+                13px 17px;
+
+            border-radius: 14px;
+
+        }
+
+
+        .student .message-bubble {
+
+            background: #2864df;
+
+            color: white;
+
+            border-bottom-right-radius: 4px;
+
+        }
+
+
+        .admin .message-bubble {
+
+            background: white;
+
+            color: #294b72;
+
+            border:
+                1px solid #d7e1ed;
+
+            border-bottom-left-radius: 4px;
+
+        }
+
+
+        .message-sender {
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .message-text {
+
+            font-size: 15px;
+
+            line-height: 1.5;
+
+            word-break: break-word;
+
+        }
+
+
+        .message-time {
+
+            font-size: 11px;
+
+            margin-top: 7px;
+
+            opacity: 0.75;
+
+        }
+
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+
+            text-align: center;
+
+            padding:
+                55px 20px;
+
+            color: #607b9d;
+
+        }
+
+
+        .empty-icon {
+
+            font-size: 55px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .empty h3 {
+
+            color: #173b6d;
+
+            font-size: 22px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        /* ================= SEND FORM ================= */
+
+        .send-title {
+
+            font-size: 21px;
+
+            color: #173b6d;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .send-form {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 14px;
+
+        }
+
+
+        .send-form select {
+
+            width: 100%;
+
+            padding:
+                13px 15px;
+
+            border:
+                1px solid #cbd8e8;
+
+            border-radius: 9px;
+
+            font-size: 15px;
+
+            background: white;
+
+            outline: none;
+
+        }
+
+
+        .send-form textarea {
+
+            width: 100%;
+
+            min-height: 110px;
+
+            resize: vertical;
+
+            padding: 14px;
+
+            border:
+                1px solid #cbd8e8;
+
+            border-radius: 9px;
+
+            font-size: 15px;
+
+            font-family: Arial;
+
+            outline: none;
+
+        }
+
+
+        .send-form textarea:focus,
+        .send-form select:focus {
+
+            border-color: #2864df;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(40, 100, 223, 0.1);
+
+        }
+
+
+        .send-btn {
+
+            width: fit-content;
+
+            background: #2864df;
+
+            color: white;
+
+            border: none;
+
+            padding:
+                13px 25px;
+
+            border-radius: 9px;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+        }
+
+
+        .send-btn:hover {
+
+            background: #174fca;
+
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 700px) {
+
+            .header {
+
+                padding:
+                    0 18px;
+
+            }
+
+
+            .logo {
+
+                font-size: 23px;
+
+            }
+
+
+            .container {
+
+                padding:
+                    30px 16px;
+
+            }
+
+
+            .top-section {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 18px;
+
+            }
+
+
+            .title-area h1 {
+
+                font-size: 28px;
+
+            }
+
+
+            .message-bubble {
+
+                max-width: 85%;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <a
+        href="{{ url_for('student_dashboard') }}"
+        style="text-decoration:none;"
+    >
+
+        <div class="logo">
+            🏠 HostelEase
+        </div>
+
+    </a>
+
+
+    <div class="student-name">
+
+        🎓 {{ student.name }}
+
+    </div>
+
+</header>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+
+    <div class="top-section">
+
+
+        <div class="title-area">
+
+            <h1>
+                💬 Messages
+            </h1>
+
+            <p>
+                Communicate directly with hostel administration.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('student_dashboard') }}"
+            class="dashboard-btn"
+        >
+            ← Dashboard
+        </a>
+
+
+    </div>
+
+
+
+    <!-- ================= FLASH MESSAGE ================= -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="flash {{ category }}">
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+
+    <!-- ================= CHAT ================= -->
+
+    <div class="chat-card">
+
+
+        <div class="chat-heading">
+
+            💬 Discussion with Hostel Administration
+
+        </div>
+
+
+
+        <div class="messages-box">
+
+
+            {% if messages %}
+
+
+                {% for message in messages %}
+
+
+                    {% if message.sender_id == student.id %}
+
+
+                        <!-- STUDENT MESSAGE -->
+
+                        <div class="message-row student">
+
+                            <div class="message-bubble">
+
+                                <div class="message-sender">
+
+                                    You
+
+                                </div>
+
+
+                                <div class="message-text">
+
+                                    {{ message.message }}
+
+                                </div>
+
+
+                                <div class="message-time">
+
+                                    {{ message.created_at }}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    {% else %}
+
+
+                        <!-- ADMIN MESSAGE -->
+
+                        <div class="message-row admin">
+
+                            <div class="message-bubble">
+
+                                <div class="message-sender">
+
+                                    🏠 Hostel Administration
+
+                                </div>
+
+
+                                <div class="message-text">
+
+                                    {{ message.message }}
+
+                                </div>
+
+
+                                <div class="message-time">
+
+                                    {{ message.created_at }}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    {% endif %}
+
+
+                {% endfor %}
+
+
+            {% else %}
+
+
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        💬
+                    </div>
+
+                    <h3>
+                        No Messages Yet
+                    </h3>
+
+                    <p>
+                        Start a conversation with hostel administration.
+                    </p>
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+
+        <!-- ================= SEND MESSAGE ================= -->
+
+        <h3 class="send-title">
+
+            ✉️ Send a Message to Administration
+
+        </h3>
+
+
+        <form
+            method="POST"
+            action="{{ url_for('student_send_message') }}"
+            class="send-form"
+        >
+
+
+            {% if admins %}
+
+
+                <select
+                    name="admin_id"
+                    required
+                >
+
+                    <option value="">
+                        Select Administrator
+                    </option>
+
+
+                    {% for admin in admins %}
+
+                        <option value="{{ admin.id }}">
+
+                            {{ admin.name }}
+
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+
+            {% else %}
+
+                <select disabled>
+
+                    <option>
+                        No administrator available
+                    </option>
+
+                </select>
+
+            {% endif %}
+
+
+
+            <textarea
+                name="message"
+                placeholder="Type your message here..."
+                required
+            ></textarea>
+
+
+
+            <button
+                type="submit"
+                class="send-btn"
+            >
+
+                📤 Send Message
+
+            </button>
+
+
+        </form>
+
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Room Swap - HostelEase</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #102f58;
+}
+
+.navbar {
+    height: 70px;
+    background: white;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #2864e8;
+}
+
+.container {
+    width: 90%;
+    max-width: 1250px;
+    margin: 40px auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h1 {
+    font-size: 36px;
+    margin-bottom: 8px;
+}
+
+.header p {
+    color: #60789b;
+}
+
+.dashboard {
+    background: #2864e8;
+    color: white;
+    padding: 13px 22px;
+    text-decoration: none;
+    border-radius: 9px;
+}
+
+.card {
+    background: white;
+    border-radius: 18px;
+    padding: 28px;
+    margin-top: 25px;
+    border: 1px solid #e0e7f0;
+}
+
+.room-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(3, 1fr);
+    gap: 20px;
+}
+
+.room {
+    background: #eef5ff;
+    padding: 22px;
+    border-radius: 12px;
+}
+
+.room span {
+    display: block;
+    color: #60789b;
+    margin-bottom: 8px;
+}
+
+.room strong {
+    font-size: 23px;
+    color: #2459d6;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+select,
+textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #d3deed;
+    border-radius: 9px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+button {
+    margin-top: 20px;
+    background: #2864e8;
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 9px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.flash {
+    margin-top: 20px;
+    padding: 14px;
+    border-radius: 9px;
+    background: #eafff1;
+    color: #187a3d;
+}
+
+.error {
+    background: #fff0f0;
+    color: #c62828;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    padding: 15px;
+    border-bottom: 1px solid #e5ebf3;
+    text-align: left;
+}
+
+th {
+    background: #eef5ff;
+    color: #17458c;
+}
+
+.status {
+    padding: 7px 13px;
+    border-radius: 20px;
+    background: #fff1c7;
+    color: #a76500;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <div class="logo">
+        🏠 HostelEase
+    </div>
+
+    <div>
+        🎓 {{ student.name }}
+    </div>
+
+</div>
+
+
+<div class="container">
+
+
+    <div class="header">
+
+        <div>
+
+            <h1>
+                🔄 Room Swap
+            </h1>
+
+            <p>
+                Request a room swap with another student.
+            </p>
+
+        </div>
+
+        <a
+            href="{{ url_for('student_dashboard') }}"
+            class="dashboard"
+        >
+            ← Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- FLASH -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div
+                    class="flash
+                    {% if category == 'error' %}
+                    error
+                    {% endif %}"
+                >
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- CURRENT ROOM -->
+
+    <div class="card">
+
+        <h2>
+            🏠 Your Current Room
+        </h2>
+
+
+        {% if current_allocation %}
+
+            <div class="room-grid">
+
+                <div class="room">
+
+                    <span>
+                        Room Number
+                    </span>
+
+                    <strong>
+                        {{ current_allocation.room.room_number }}
+                    </strong>
+
+                </div>
+
+
+                <div class="room">
+
+                    <span>
+                        Hostel
+                    </span>
+
+                    <strong>
+                        {{ current_allocation.room.hostel }}
+                    </strong>
+
+                </div>
+
+
+                <div class="room">
+
+                    <span>
+                        Floor
+                    </span>
+
+                    <strong>
+                        {{ current_allocation.room.floor }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        {% else %}
+
+            <p>
+                You do not have a room allocation yet.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- CREATE REQUEST -->
+
+    <div class="card">
+
+        <h2>
+            ➕ Create Room Swap Request
+        </h2>
+
+
+        {% if other_students %}
+
+            <form
+                method="POST"
+                action="{{ url_for('student_room_swap') }}"
+            >
+
+                <label>
+                    Select Student
+                </label>
+
+                <select
+                    name="target_student_id"
+                    required
+                >
+
+                    <option value="">
+                        Select Student
+                    </option>
+
+
+                    {% for target in other_students %}
+
+                        <option
+                            value="{{ target.id }}"
+                        >
+
+                            {{ target.name }}
+
+                            -
+                            {{ target.roll_number }}
+
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+
+                <label>
+                    Reason / Message
+                </label>
+
+                <textarea
+                    name="message"
+                    placeholder="Write the reason for your room swap request..."
+                    required
+                ></textarea>
+
+
+                <button type="submit">
+
+                    🔄 Send Swap Request
+
+                </button>
+
+            </form>
+
+        {% else %}
+
+            <p>
+                No other students with active room
+                allocations are currently available
+                for a room swap.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- MY REQUESTS -->
+
+    <div class="card">
+
+        <h2>
+            📋 My Swap Requests
+        </h2>
+
+
+        {% if my_requests %}
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Target Student
+                        </th>
+
+                        <th>
+                            Message
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for swap in my_requests %}
+
+                        <tr>
+
+                            <td>
+                                {{ swap.id }}
+                            </td>
+
+                            <td>
+
+                                {% if swap.target_student %}
+
+                                    {{ swap.target_student.name }}
+
+                                {% else %}
+
+                                    Student
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+                                {{ swap.message }}
+                            </td>
+
+                            <td>
+
+                                <span class="status">
+
+                                    {{ swap.status|capitalize }}
+
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        {% else %}
+
+            <p>
+                You have not submitted any room swap
+                requests yet.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

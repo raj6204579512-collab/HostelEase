@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Leave Requests - HostelEase Admin</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #172554;
+        }
+
+        header {
+            height: 75px;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 40px;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .admin {
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .main {
+            width: 92%;
+            max-width: 1250px;
+            margin: auto;
+            padding: 40px 0;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            margin-top: 8px;
+            color: #64748b;
+        }
+
+        .dashboard-btn {
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+
+            padding: 12px 20px;
+            border-radius: 9px;
+
+            font-weight: 600;
+        }
+
+        .dashboard-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .message {
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 22px;
+        }
+
+        .number {
+            font-size: 30px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .label {
+            margin-top: 5px;
+            color: #64748b;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 25px;
+
+            box-shadow:
+                0 6px 20px
+                rgba(15, 23, 42, 0.04);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 22px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        th {
+            background: #eff6ff;
+            color: #1e3a8a;
+            text-align: left;
+            padding: 14px;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 14px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 14px;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 11px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .approved {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-form {
+            margin: 0;
+        }
+
+        .approve,
+        .reject {
+            border: none;
+            padding: 9px 13px;
+            border-radius: 7px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .approve {
+            background: #16a34a;
+        }
+
+        .approve:hover {
+            background: #15803d;
+        }
+
+        .reject {
+            background: #dc2626;
+        }
+
+        .reject:hover {
+            background: #b91c1c;
+        }
+
+        .processed {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 45px 20px;
+            color: #64748b;
+        }
+
+        .empty-icon {
+            font-size: 45px;
+        }
+
+        @media(max-width: 800px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .top {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 18px;
+            }
+
+            header {
+                padding: 0 18px;
+            }
+
+            .main {
+                width: 94%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        🏠 HostelEase Admin
+    </div>
+
+    <div class="admin">
+        👨‍💼 Administrator
+    </div>
+
+</header>
+
+
+<main class="main">
+
+
+    <div class="top">
+
+        <div>
+
+            <h1>
+                📅 Leave Requests
+            </h1>
+
+            <div class="subtitle">
+                Review and manage student leave requests.
+            </div>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('admin_dashboard') }}"
+            class="dashboard-btn"
+        >
+            ← Admin Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- FLASH MESSAGE -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div
+                    class="message
+                    {% if category == 'error' %}
+                        error
+                    {% else %}
+                        success
+                    {% endif %}"
+                >
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <div class="number">
+                {{ leave_requests|length }}
+            </div>
+
+            <div class="label">
+                Total Leave Requests
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="number">
+
+                {{ leave_requests
+                   |selectattr("status", "equalto", "Pending")
+                   |list
+                   |length
+                }}
+
+            </div>
+
+            <div class="label">
+                Pending Requests
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="number">
+
+                {{ leave_requests
+                   |selectattr("status", "equalto", "Approved")
+                   |list
+                   |length
+                }}
+
+            </div>
+
+            <div class="label">
+                Approved Requests
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- LEAVE REQUESTS -->
+
+    <div class="card">
+
+        <h2>
+            📋 Student Leave Requests
+        </h2>
+
+
+        {% if leave_requests %}
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Student
+                            </th>
+
+                            <th>
+                                From
+                            </th>
+
+                            <th>
+                                To
+                            </th>
+
+                            <th>
+                                Reason
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        {% for leave in leave_requests %}
+
+                            <tr>
+
+
+                                <td>
+                                    #{{ leave.id }}
+                                </td>
+
+
+                                <td>
+                                    Student #{{ leave.student_id }}
+                                </td>
+
+
+                                <td>
+                                    {{ leave.from_date }}
+                                </td>
+
+
+                                <td>
+                                    {{ leave.to_date }}
+                                </td>
+
+
+                                <td>
+                                    {{ leave.reason }}
+                                </td>
+
+
+                                <td>
+
+                                    {% if leave.status == "Pending" %}
+
+                                        <span class="status pending">
+                                            Pending
+                                        </span>
+
+                                    {% elif leave.status == "Approved" %}
+
+                                        <span class="status approved">
+                                            Approved
+                                        </span>
+
+                                    {% elif leave.status == "Rejected" %}
+
+                                        <span class="status rejected">
+                                            Rejected
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="status pending">
+                                            {{ leave.status }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <td>
+
+
+                                    {% if leave.status == "Pending" %}
+
+                                        <div class="actions">
+
+
+                                            <!-- APPROVE -->
+
+                                            <form
+                                                method="POST"
+                                                action="{{ url_for(
+                                                    'update_leave_status',
+                                                    leave_id=leave.id
+                                                ) }}"
+                                                class="action-form"
+                                            >
+
+                                                <input
+                                                    type="hidden"
+                                                    name="status"
+                                                    value="Approved"
+                                                >
+
+                                                <button
+                                                    type="submit"
+                                                    class="approve"
+                                                >
+                                                    ✓ Accept
+                                                </button>
+
+                                            </form>
+
+
+                                            <!-- REJECT -->
+
+                                            <form
+                                                method="POST"
+                                                action="{{ url_for(
+                                                    'update_leave_status',
+                                                    leave_id=leave.id
+                                                ) }}"
+                                                class="action-form"
+                                            >
+
+                                                <input
+                                                    type="hidden"
+                                                    name="status"
+                                                    value="Rejected"
+                                                >
+
+                                                <button
+                                                    type="submit"
+                                                    class="reject"
+                                                >
+                                                    ✕ Reject
+                                                </button>
+
+                                            </form>
+
+
+                                        </div>
+
+
+                                    {% else %}
+
+                                        <span class="processed">
+                                            Already processed
+                                        </span>
+
+                                    {% endif %}
+
+
+                                </td>
+
+
+                            </tr>
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        {% else %}
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    📭
+                </div>
+
+                <h3>
+                    No Leave Requests
+                </h3>
+
+                <p>
+                    No students have submitted leave requests yet.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

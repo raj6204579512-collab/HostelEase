@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login | HostelEase</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                linear-gradient(
+                    rgba(8, 15, 35, 0.72),
+                    rgba(8, 15, 35, 0.82)
+                ),
+                url("https://images.unsplash.com/photo-1560185008-b033106af5c3?auto=format&fit=crop&w=2000&q=80");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .page-container {
+            width: 100%;
+            max-width: 1100px;
+            min-height: 650px;
+            margin: 25px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            overflow: hidden;
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.20);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+        }
+
+        /* LEFT SECTION */
+
+        .left-section {
+            position: relative;
+            padding: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(15, 23, 42, 0.70),
+                    rgba(30, 41, 59, 0.45)
+                );
+        }
+
+        .brand {
+            position: absolute;
+            top: 35px;
+            left: 45px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+        }
+
+        .brand-name {
+            font-size: 23px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .left-content {
+            max-width: 530px;
+        }
+
+        .admin-badge {
+            display: inline-flex;
+            width: fit-content;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            margin-bottom: 22px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            background: rgba(99, 102, 241, 0.18);
+            border: 1px solid rgba(129, 140, 248, 0.35);
+            color: #c7d2fe;
+        }
+
+        .left-content h1 {
+            font-size: 48px;
+            line-height: 1.12;
+            margin-bottom: 20px;
+        }
+
+        .left-content h1 span {
+            color: #a78bfa;
+        }
+
+        .left-content p {
+            color: #d1d5db;
+            font-size: 16px;
+            line-height: 1.8;
+            max-width: 480px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 35px;
+        }
+
+        .feature {
+            padding: 15px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        .feature-icon {
+            font-size: 22px;
+            margin-bottom: 7px;
+        }
+
+        .feature h3 {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .feature p {
+            font-size: 12px;
+            line-height: 1.4;
+            color: #aeb6c5;
+        }
+
+        /* RIGHT SECTION */
+
+        .right-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 45px;
+            background: rgba(255, 255, 255, 0.96);
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 390px;
+        }
+
+        .login-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 31px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            box-shadow: 0 12px 30px rgba(99, 102, 241, 0.30);
+        }
+
+        .login-card h2 {
+            text-align: center;
+            color: #111827;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .alert {
+            padding: 12px 15px;
+            margin-bottom: 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .alert.success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .alert.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .input-box {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 17px;
+            color: #9ca3af;
+            pointer-events: none;
+        }
+
+        .input-box input {
+            width: 100%;
+            height: 52px;
+            padding: 0 45px;
+            border: 1px solid #d1d5db;
+            border-radius: 13px;
+            outline: none;
+            background: #f9fafb;
+            color: #111827;
+            font-size: 14px;
+            transition: 0.25s ease;
+        }
+
+        .input-box input:focus {
+            background: white;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.10);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 17px;
+            color: #6b7280;
+        }
+
+        .login-btn {
+            width: 100%;
+            height: 53px;
+            margin-top: 8px;
+            border: none;
+            border-radius: 13px;
+            cursor: pointer;
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            box-shadow: 0 12px 25px rgba(99, 102, 241, 0.28);
+            transition: 0.25s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 30px rgba(99, 102, 241, 0.35);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .register-text {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .register-text a {
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .register-text a:hover {
+            text-decoration: underline;
+        }
+
+        .student-login {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .student-login a {
+            color: #4b5563;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .student-login a:hover {
+            color: #6366f1;
+        }
+
+        .security-note {
+            margin-top: 25px;
+            padding: 12px;
+            border-radius: 11px;
+            background: #f3f4f6;
+            color: #6b7280;
+            font-size: 11px;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+
+            .page-container {
+                grid-template-columns: 1fr;
+                max-width: 520px;
+            }
+
+            .left-section {
+                display: none;
+            }
+
+            .right-section {
+                min-height: 650px;
+                padding: 35px 25px;
+            }
+        }
+
+        @media (max-width: 450px) {
+
+            body {
+                background: #f3f4f6;
+            }
+
+            .page-container {
+                margin: 0;
+                min-height: 100vh;
+                border-radius: 0;
+            }
+
+            .right-section {
+                padding: 25px 20px;
+            }
+
+            .login-card h2 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <!-- LEFT SIDE -->
+    <section class="left-section">
+
+        <div class="brand">
+            <div class="brand-icon">H</div>
+            <div class="brand-name">HostelEase</div>
+        </div>
+
+        <div class="left-content">
+
+            <div class="admin-badge">
+                🔐 Administrator Portal
+            </div>
+
+            <h1>
+                Manage your
+                <span>Hostel</span>
+                with Ease.
+            </h1>
+
+            <p>
+                Access the HostelEase administration portal to manage
+                students, rooms, payments, complaints, leave requests,
+                announcements and hostel operations from one place.
+            </p>
+
+            <div class="features">
+
+                <div class="feature">
+                    <div class="feature-icon">👨‍🎓</div>
+                    <h3>Student Management</h3>
+                    <p>Manage student profiles and registrations.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🏠</div>
+                    <h3>Room Management</h3>
+                    <p>Manage rooms, allocations and occupancy.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">💳</div>
+                    <h3>Payments</h3>
+                    <p>Track hostel fees and payment records.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">📢</div>
+                    <h3>Hostel Notices</h3>
+                    <p>Publish important hostel announcements.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- RIGHT SIDE -->
+    <section class="right-section">
+
+        <div class="login-card">
+
+            <div class="login-icon">
+                🔐
+            </div>
+
+            <h2>Admin Login</h2>
+
+            <p class="subtitle">
+                Sign in to access the HostelEase Admin Panel
+            </p>
+
+
+            <!-- FLASH MESSAGES -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% if messages %}
+
+                    {% for category, message in messages %}
+
+                        <div class="alert {{ category }}">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            {% endwith %}
+
+
+            <!-- LOGIN FORM -->
+            <form method="POST"
+                  action="{{ url_for('admin_login') }}">
+
+                <!-- EMAIL -->
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <div class="input-box">
+
+                        <span class="input-icon">
+                            ✉️
+                        </span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter admin email"
+                            required
+                            autocomplete="email"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="input-box">
+
+                        <span class="input-icon">
+                            🔒
+                        </span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            required
+                            autocomplete="current-password"
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword()"
+                            aria-label="Show password"
+                        >
+                            👁️
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LOGIN BUTTON -->
+                <button type="submit" class="login-btn">
+                    Login to Admin Panel →
+                </button>
+
+            </form>
+
+
+            <!-- ADMIN REGISTER -->
+            <div class="register-text">
+
+                Don't have an admin account?
+
+                <a href="{{ url_for('admin_register') }}">
+                    Create Admin Account
+                </a>
+
+            </div>
+
+
+            <!-- STUDENT LOGIN -->
+            <div class="student-login">
+
+                <a href="{{ url_for('login') }}">
+                    ← Go to Student Login
+                </a>
+
+            </div>
+
+
+            <!-- SECURITY NOTE -->
+            <div class="security-note">
+                🔒 Your login credentials are protected by HostelEase.
+                Please do not share your password with anyone.
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<script>
+
+    function togglePassword() {
+
+        const password =
+            document.getElementById("password");
+
+        const button =
+            document.querySelector(".password-toggle");
+
+        if (password.type === "password") {
+
+            password.type = "text";
+            button.textContent = "🙈";
+
+        } else {
+
+            password.type = "password";
+            button.textContent = "👁️";
+
+        }
+
+    }
+
+</script>
+
+</body>
+</html>

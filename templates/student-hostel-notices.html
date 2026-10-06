@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Hostel Notices - HostelEase</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #102a5c;
+        }
+
+        .navbar {
+            height: 78px;
+            background: white;
+            border-bottom: 1px solid #e1e7f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 35px;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: 700;
+            color: #2864e8;
+        }
+
+        .student {
+            font-weight: 600;
+            color: #243b64;
+        }
+
+        .container {
+            max-width: 1180px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .page-title {
+            font-size: 38px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .page-subtitle {
+            color: #60789d;
+            font-size: 17px;
+            margin-top: 10px;
+        }
+
+        .dashboard-btn {
+            background: #2864e8;
+            color: white;
+            text-decoration: none;
+            padding: 14px 22px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #dce4ef;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(30, 60, 100, 0.05);
+        }
+
+        .section-title {
+            font-size: 27px;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        .notice {
+            border: 1px solid #dce4ef;
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 20px;
+            background: #ffffff;
+        }
+
+        .notice-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .notice-title {
+            font-size: 21px;
+            font-weight: 700;
+            color: #102a5c;
+        }
+
+        .notice-category {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: #e9f0ff;
+            color: #2864e8;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .notice-date {
+            background: #f0f4fa;
+            padding: 8px 12px;
+            border-radius: 20px;
+            color: #60789d;
+            font-size: 13px;
+        }
+
+        .notice-content {
+            margin-top: 20px;
+            color: #536b8e;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 70px 20px;
+            color: #60789d;
+        }
+
+        .empty-icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .empty h3 {
+            font-size: 22px;
+            color: #29456f;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <div class="logo">
+            🏠 HostelEase
+        </div>
+
+        <div class="student">
+            🎓 Student
+        </div>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="page-header">
+
+            <div>
+
+                <h1 class="page-title">
+                    📌 Hostel Notices
+                </h1>
+
+                <div class="page-subtitle">
+                    View hostel-specific notices and daily updates.
+                </div>
+
+            </div>
+
+            <a href="{{ url_for('student_dashboard') }}"
+               class="dashboard-btn">
+                ← Dashboard
+            </a>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2 class="section-title">
+                📌 Hostel Notices
+            </h2>
+
+
+            {% if notices %}
+
+                {% for notice in notices %}
+
+                    <div class="notice">
+
+                        <div class="notice-header">
+
+                            <div>
+
+                                <div class="notice-title">
+                                    📌 {{ notice.title }}
+                                </div>
+
+                                <div class="notice-category">
+                                    {{ notice.category }}
+                                </div>
+
+                            </div>
+
+
+                            <div class="notice-date">
+
+                                {{ notice.created_at.strftime("%d %b %Y %I:%M %p") }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="notice-content">
+
+                            {{ notice.content }}
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        📭
+                    </div>
+
+                    <h3>
+                        No Hostel Notices
+                    </h3>
+
+                    <p>
+                        There are no hostel notices available right now.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

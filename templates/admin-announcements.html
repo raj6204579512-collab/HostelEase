@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Announcements - HostelEase Admin</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #172554;
+        }
+
+        header {
+            height: 78px;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 35px;
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .admin-name {
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1150px;
+            margin: auto;
+            padding: 40px 0;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 28px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 34px;
+        }
+
+        .subtitle {
+            margin-top: 8px;
+            color: #64748b;
+        }
+
+        .dashboard-btn {
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+
+            padding: 13px 20px;
+
+            border-radius: 9px;
+
+            font-weight: 700;
+        }
+
+        .dashboard-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .message {
+            padding: 15px 20px;
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            font-weight: 600;
+        }
+
+        .success {
+            background: #dcfce7;
+            border: 1px solid #86efac;
+            color: #166534;
+        }
+
+        .error {
+            background: #fee2e2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+        }
+
+        .grid {
+            display: grid;
+
+            grid-template-columns: 380px 1fr;
+
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 16px;
+
+            padding: 28px;
+
+            box-shadow:
+                0 6px 20px rgba(15, 23, 42, 0.05);
+        }
+
+        .card h2 {
+            margin-top: 0;
+
+            margin-bottom: 22px;
+
+            font-size: 23px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-weight: 700;
+
+            color: #334155;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 9px;
+
+            padding: 13px;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 15px;
+
+            margin-bottom: 18px;
+
+            outline: none;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, 0.10);
+        }
+
+        textarea {
+            min-height: 150px;
+
+            resize: vertical;
+        }
+
+        .publish-btn {
+            width: 100%;
+
+            border: none;
+
+            background: #2563eb;
+
+            color: white;
+
+            padding: 14px;
+
+            border-radius: 9px;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .publish-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .announcement {
+            border: 1px solid #e2e8f0;
+
+            border-radius: 12px;
+
+            padding: 20px;
+
+            margin-bottom: 17px;
+        }
+
+        .announcement:last-child {
+            margin-bottom: 0;
+        }
+
+        .announcement:hover {
+            border-color: #bfdbfe;
+
+            box-shadow:
+                0 5px 15px
+                rgba(37, 99, 235, 0.08);
+        }
+
+        .announcement-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 15px;
+
+            margin-bottom: 10px;
+        }
+
+        .announcement-title {
+            margin: 0;
+
+            font-size: 19px;
+
+            color: #172554;
+        }
+
+        .date {
+            background: #f1f5f9;
+
+            color: #64748b;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            white-space: nowrap;
+        }
+
+        .announcement-content {
+            color: #475569;
+
+            line-height: 1.7;
+
+            white-space: pre-line;
+        }
+
+        .empty {
+            text-align: center;
+
+            padding: 50px 20px;
+
+            color: #64748b;
+        }
+
+        .empty-icon {
+            font-size: 50px;
+
+            margin-bottom: 10px;
+        }
+
+        .empty h3 {
+            color: #334155;
+        }
+
+        @media (max-width: 900px) {
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 18px;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 0 18px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .announcement-header {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+    <div class="logo">
+        🏠 HostelEase Admin
+    </div>
+
+    <div class="admin-name">
+
+        👨‍💼
+
+        {% if admin %}
+            {{ admin.name }}
+        {% else %}
+            Administrator
+        {% endif %}
+
+    </div>
+
+</header>
+
+
+<div class="container">
+
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>
+                📢 Announcements
+            </h1>
+
+            <div class="subtitle">
+                Create and publish announcements for hostel students.
+            </div>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('admin_dashboard') }}"
+            class="dashboard-btn"
+        >
+            ← Admin Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- FLASH MESSAGES -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div
+                    class="message
+                    {% if category == 'error' %}
+                        error
+                    {% else %}
+                        success
+                    {% endif %}"
+                >
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- MAIN GRID -->
+
+    <div class="grid">
+
+
+        <!-- CREATE ANNOUNCEMENT -->
+
+        <div class="card">
+
+            <h2>
+                ➕ Create Announcement
+            </h2>
+
+
+            <form
+                method="POST"
+                action="{{ url_for('admin_announcements') }}"
+            >
+
+
+                <label>
+                    Announcement Title
+                </label>
+
+
+                <input
+                    type="text"
+                    name="title"
+                    placeholder="Enter announcement title"
+                    required
+                >
+
+
+                <label>
+                    Announcement Content
+                </label>
+
+
+                <textarea
+                    name="content"
+                    placeholder="Write announcement details..."
+                    required
+                ></textarea>
+
+
+                <button
+                    type="submit"
+                    class="publish-btn"
+                >
+                    📢 Publish Announcement
+                </button>
+
+
+            </form>
+
+        </div>
+
+
+        <!-- EXISTING ANNOUNCEMENTS -->
+
+        <div class="card">
+
+            <h2>
+                📋 Published Announcements
+            </h2>
+
+
+            {% if announcements %}
+
+
+                {% for announcement in announcements %}
+
+
+                    <div class="announcement">
+
+
+                        <div class="announcement-header">
+
+
+                            <h3 class="announcement-title">
+
+                                📢 {{ announcement.title }}
+
+                            </h3>
+
+
+                            <span class="date">
+
+                                {% if announcement.created_at %}
+
+                                    {{ announcement.created_at }}
+
+                                {% else %}
+
+                                    Recently
+
+                                {% endif %}
+
+                            </span>
+
+
+                        </div>
+
+
+                        <div class="announcement-content">
+
+                            {{ announcement.content }}
+
+                        </div>
+
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            {% else %}
+
+
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        📭
+                    </div>
+
+                    <h3>
+                        No Announcements
+                    </h3>
+
+                    <p>
+                        Create your first announcement for students.
+                    </p>
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Student Login | HostelEase</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f4f8ff,
+                    #eef4ff
+                );
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            color: #102a56;
+
+        }
+
+
+        .login-container {
+
+            width: 100%;
+
+            max-width: 625px;
+
+            padding: 30px;
+
+        }
+
+
+        .login-card {
+
+            background: white;
+
+            border-radius: 22px;
+
+            padding: 42px 48px;
+
+            box-shadow:
+                0 20px 55px
+                rgba(35, 75, 130, 0.12);
+
+            border:
+                1px solid #e4ebf5;
+
+        }
+
+
+        .icon-box {
+
+            width: 62px;
+
+            height: 62px;
+
+            margin: 0 auto 18px;
+
+            border-radius: 17px;
+
+            background: #edf4ff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 32px;
+
+        }
+
+
+        h1 {
+
+            text-align: center;
+
+            font-size: 32px;
+
+            margin-bottom: 8px;
+
+            color: #102b5c;
+
+        }
+
+
+        .subtitle {
+
+            text-align: center;
+
+            color: #60789c;
+
+            font-size: 15px;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .message {
+
+            padding: 13px 16px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            font-size: 14px;
+
+        }
+
+
+        .message.success {
+
+            background: #dcfce7;
+
+            color: #166534;
+
+            border:
+                1px solid #bbf7d0;
+
+        }
+
+
+        .message.error {
+
+            background: #eff6ff;
+
+            color: #1557b0;
+
+            border:
+                1px solid #bfdbfe;
+
+        }
+
+
+        .form-group {
+
+            margin-bottom: 22px;
+
+        }
+
+
+        label {
+
+            display: block;
+
+            margin-bottom: 9px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            color: #17345f;
+
+        }
+
+
+        input {
+
+            width: 100%;
+
+            height: 54px;
+
+            border:
+                1px solid #d4dfef;
+
+            border-radius: 10px;
+
+            padding:
+                0 16px;
+
+            font-size: 15px;
+
+            color: #18345e;
+
+            outline: none;
+
+            background: white;
+
+        }
+
+
+        input:focus {
+
+            border-color: #2c66e8;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(44, 102, 232, 0.10);
+
+        }
+
+
+        input::placeholder {
+
+            color: #9aacc5;
+
+        }
+
+
+        .options {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin: 5px 0 28px;
+
+            font-size: 14px;
+
+        }
+
+
+        .remember {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #60789c;
+
+        }
+
+
+        .remember input {
+
+            width: 15px;
+
+            height: 15px;
+
+            box-shadow: none;
+
+        }
+
+
+        .forgot {
+
+            color: #2463e9;
+
+            text-decoration: none;
+
+        }
+
+
+        .forgot:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        .login-btn {
+
+            width: 100%;
+
+            height: 57px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #2d63e8;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .login-btn:hover {
+
+            background: #2055d1;
+
+            transform: translateY(-1px);
+
+        }
+
+
+        .register-text {
+
+            text-align: center;
+
+            margin-top: 27px;
+
+            color: #60789c;
+
+            font-size: 14px;
+
+        }
+
+
+        .register-text a {
+
+            color: #245fe0;
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+            margin-left: 5px;
+
+        }
+
+
+        .register-text a:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        .divider {
+
+            height: 1px;
+
+            background: #e5ebf3;
+
+            margin: 27px 0;
+
+        }
+
+
+        .home-link {
+
+            display: block;
+
+            text-align: center;
+
+            color: #60789c;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+        }
+
+
+        .home-link:hover {
+
+            color: #245fe0;
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .login-container {
+
+                padding: 15px;
+
+            }
+
+            .login-card {
+
+                padding: 32px 24px;
+
+            }
+
+            h1 {
+
+                font-size: 28px;
+
+            }
+
+            .options {
+
+                flex-direction: column;
+
+                gap: 15px;
+
+                align-items: flex-start;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-container">
+
+    <div class="login-card">
+
+
+        <div class="icon-box">
+            🔐
+        </div>
+
+
+        <h1>
+            Student Login
+        </h1>
+
+
+        <p class="subtitle">
+            Sign in using your enrollment number and password
+        </p>
+
+
+        <!-- FLASH MESSAGES -->
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div class="message {{ category }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- LOGIN FORM -->
+
+        <form
+            method="POST"
+            action="{{ url_for('login') }}"
+        >
+
+
+            <!-- ENROLLMENT NUMBER -->
+
+            <div class="form-group">
+
+                <label for="roll_number">
+                    Enrollment Number
+                </label>
+
+                <input
+                    type="text"
+                    id="roll_number"
+                    name="roll_number"
+                    placeholder="Enter your enrollment number"
+                    autocomplete="username"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+
+            <!-- OPTIONS -->
+
+            <div class="options">
+
+                <label class="remember">
+
+                    <input
+                        type="checkbox"
+                        name="remember"
+                    >
+
+                    <span>
+                        Remember me
+                    </span>
+
+                </label>
+
+
+                <a
+                    href="#"
+                    class="forgot"
+                    onclick="alert('Password reset feature will be added next.'); return false;"
+                >
+                    Forgot Password?
+                </a>
+
+            </div>
+
+
+            <!-- LOGIN BUTTON -->
+
+            <button
+                type="submit"
+                class="login-btn"
+            >
+
+                Login to HostelEase
+                &nbsp; →
+
+            </button>
+
+
+        </form>
+
+
+        <!-- REGISTER -->
+
+        <div class="register-text">
+
+            Don't have an account?
+
+            <a href="{{ url_for('register') }}">
+                Create Account
+            </a>
+
+        </div>
+
+
+        <div class="divider"></div>
+
+
+        <!-- HOME -->
+
+        <a
+            href="{{ url_for('home') }}"
+            class="home-link"
+        >
+
+            ← Back to Home
+
+        </a>
+
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Leave Request - HostelEase</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #172554;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            height: 78px;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 40px;
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .student-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+            width: 92%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 0;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 34px;
+        }
+
+        .subtitle {
+            margin-top: 8px;
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        .dashboard-btn {
+            text-decoration: none;
+            background: #2563eb;
+            color: white;
+
+            padding: 13px 21px;
+
+            border-radius: 9px;
+
+            font-weight: 700;
+        }
+
+        .dashboard-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* =========================
+           FLASH MESSAGE
+        ========================= */
+
+        .message {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 22px;
+            font-weight: 600;
+        }
+
+        .success {
+            background: #dcfce7;
+            border: 1px solid #86efac;
+            color: #166534;
+        }
+
+        .error {
+            background: #fee2e2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+        }
+
+        /* =========================
+           CARD
+        ========================= */
+
+        .card {
+            background: white;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 16px;
+
+            padding: 30px;
+
+            margin-bottom: 28px;
+
+            box-shadow:
+                0 6px 20px rgba(15, 23, 42, 0.05);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 25px;
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 22px;
+        }
+
+        .form-group {
+            width: 100%;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 9px;
+
+            font-weight: 700;
+
+            color: #334155;
+        }
+
+        /* =========================
+           DATE SELECTORS
+        ========================= */
+
+        .date-row {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1.4fr 1.2fr;
+
+            gap: 10px;
+        }
+
+        .date-row select {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 9px;
+
+            background: white;
+
+            color: #172554;
+
+            font-size: 14px;
+
+            outline: none;
+
+            cursor: pointer;
+        }
+
+        .date-row select:focus {
+
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, 0.10);
+        }
+
+        textarea {
+
+            width: 100%;
+
+            min-height: 140px;
+
+            padding: 14px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 9px;
+
+            font-size: 15px;
+
+            resize: vertical;
+
+            outline: none;
+        }
+
+        textarea:focus {
+
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, 0.10);
+        }
+
+        .hint {
+
+            margin-top: 7px;
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+        /* =========================
+           SUBMIT BUTTON
+        ========================= */
+
+        .submit-btn {
+
+            margin-top: 24px;
+
+            border: none;
+
+            background: #2563eb;
+
+            color: white;
+
+            padding: 14px 23px;
+
+            border-radius: 9px;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+
+            background: #1d4ed8;
+
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table-wrapper {
+
+            overflow-x: auto;
+
+        }
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 750px;
+
+        }
+
+        th {
+
+            background: #eff6ff;
+
+            color: #1e3a8a;
+
+            text-align: left;
+
+            padding: 15px;
+
+            font-size: 14px;
+
+        }
+
+        td {
+
+            padding: 15px;
+
+            border-top:
+                1px solid #e5e7eb;
+
+            color: #334155;
+
+            font-size: 14px;
+
+        }
+
+        tbody tr:hover {
+
+            background: #f8fafc;
+
+        }
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status {
+
+            display: inline-block;
+
+            padding: 7px 13px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+        }
+
+        .pending {
+
+            background: #fef3c7;
+
+            color: #92400e;
+
+        }
+
+        .approved {
+
+            background: #dcfce7;
+
+            color: #166534;
+
+        }
+
+        .rejected {
+
+            background: #fee2e2;
+
+            color: #991b1b;
+
+        }
+
+        .unknown {
+
+            background: #e2e8f0;
+
+            color: #475569;
+
+        }
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty {
+
+            text-align: center;
+
+            padding: 50px 20px;
+
+            color: #64748b;
+
+        }
+
+        .empty-icon {
+
+            font-size: 48px;
+
+        }
+
+        .empty h3 {
+
+            color: #334155;
+
+            margin-bottom: 8px;
+
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 750px) {
+
+            header {
+
+                padding: 0 18px;
+
+            }
+
+            .main {
+
+                width: 94%;
+
+            }
+
+            .top {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 18px;
+
+            }
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .full {
+
+                grid-column: auto;
+
+            }
+
+            .date-row {
+
+                grid-template-columns:
+                    1fr 1fr 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <div class="logo">
+        🏠 HostelEase
+    </div>
+
+    <div class="student-name">
+
+        👨‍🎓 {{ student.name }}
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- PAGE HEADER -->
+
+    <div class="top">
+
+        <div>
+
+            <h1>
+                📅 Leave Request
+            </h1>
+
+            <div class="subtitle">
+                Apply for leave and track your request status.
+            </div>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('student_dashboard') }}"
+            class="dashboard-btn"
+        >
+            ← Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- =================================================
+         FLASH MESSAGES
+    ================================================== -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div
+                    class="message
+                    {% if category == 'error' %}
+                        error
+                    {% else %}
+                        success
+                    {% endif %}"
+                >
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- =================================================
+         APPLY FOR LEAVE
+    ================================================== -->
+
+    <div class="card">
+
+        <h2>
+            ➕ Apply for Leave
+        </h2>
+
+
+        <form
+            method="POST"
+            action="{{ url_for('student_leave') }}"
+            id="leaveForm"
+        >
+
+
+            <div class="form-grid">
+
+
+                <!-- =====================================
+                     FROM DATE
+                ====================================== -->
+
+                <div class="form-group">
+
+                    <label>
+                        From Date
+                    </label>
+
+
+                    <div class="date-row">
+
+
+                        <!-- DAY -->
+
+                        <select
+                            id="from_day"
+                            required
+                        >
+
+                            <option value="">
+                                Day
+                            </option>
+
+                            {% for day in range(1, 32) %}
+
+                                <option value="{{ '%02d'|format(day) }}">
+                                    {{ day }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+
+                        <!-- MONTH -->
+
+                        <select
+                            id="from_month"
+                            required
+                        >
+
+                            <option value="">
+                                Month
+                            </option>
+
+                            <option value="01">
+                                January
+                            </option>
+
+                            <option value="02">
+                                February
+                            </option>
+
+                            <option value="03">
+                                March
+                            </option>
+
+                            <option value="04">
+                                April
+                            </option>
+
+                            <option value="05">
+                                May
+                            </option>
+
+                            <option value="06">
+                                June
+                            </option>
+
+                            <option value="07">
+                                July
+                            </option>
+
+                            <option value="08">
+                                August
+                            </option>
+
+                            <option value="09">
+                                September
+                            </option>
+
+                            <option value="10">
+                                October
+                            </option>
+
+                            <option value="11">
+                                November
+                            </option>
+
+                            <option value="12">
+                                December
+                            </option>
+
+                        </select>
+
+
+                        <!-- YEAR -->
+
+                        <select
+                            id="from_year"
+                            required
+                        >
+
+                            <option value="">
+                                Year
+                            </option>
+
+                            {% for year in range(2026, 2036) %}
+
+                                <option value="{{ year }}">
+                                    {{ year }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- HIDDEN VALUE SENT TO FLASK -->
+
+                    <input
+                        type="hidden"
+                        name="from_date"
+                        id="from_date"
+                    >
+
+
+                    <div class="hint">
+                        Select day, month and year.
+                    </div>
+
+                </div>
+
+
+                <!-- =====================================
+                     TO DATE
+                ====================================== -->
+
+                <div class="form-group">
+
+                    <label>
+                        To Date
+                    </label>
+
+
+                    <div class="date-row">
+
+
+                        <!-- DAY -->
+
+                        <select
+                            id="to_day"
+                            required
+                        >
+
+                            <option value="">
+                                Day
+                            </option>
+
+                            {% for day in range(1, 32) %}
+
+                                <option value="{{ '%02d'|format(day) }}">
+                                    {{ day }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+
+                        <!-- MONTH -->
+
+                        <select
+                            id="to_month"
+                            required
+                        >
+
+                            <option value="">
+                                Month
+                            </option>
+
+                            <option value="01">
+                                January
+                            </option>
+
+                            <option value="02">
+                                February
+                            </option>
+
+                            <option value="03">
+                                March
+                            </option>
+
+                            <option value="04">
+                                April
+                            </option>
+
+                            <option value="05">
+                                May
+                            </option>
+
+                            <option value="06">
+                                June
+                            </option>
+
+                            <option value="07">
+                                July
+                            </option>
+
+                            <option value="08">
+                                August
+                            </option>
+
+                            <option value="09">
+                                September
+                            </option>
+
+                            <option value="10">
+                                October
+                            </option>
+
+                            <option value="11">
+                                November
+                            </option>
+
+                            <option value="12">
+                                December
+                            </option>
+
+                        </select>
+
+
+                        <!-- YEAR -->
+
+                        <select
+                            id="to_year"
+                            required
+                        >
+
+                            <option value="">
+                                Year
+                            </option>
+
+                            {% for year in range(2026, 2036) %}
+
+                                <option value="{{ year }}">
+                                    {{ year }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- HIDDEN VALUE SENT TO FLASK -->
+
+                    <input
+                        type="hidden"
+                        name="to_date"
+                        id="to_date"
+                    >
+
+
+                    <div class="hint">
+                        Select day, month and year.
+                    </div>
+
+                </div>
+
+
+                <!-- =====================================
+                     REASON
+                ====================================== -->
+
+                <div class="form-group full">
+
+                    <label for="reason">
+                        Reason for Leave
+                    </label>
+
+
+                    <textarea
+                        id="reason"
+                        name="reason"
+                        placeholder="Enter the reason for your leave..."
+                        required
+                    ></textarea>
+
+
+                    <div class="hint">
+                        Please provide a clear reason for your leave request.
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="submit-btn"
+            >
+
+                📅 Submit Leave Request
+
+            </button>
+
+
+        </form>
+
+    </div>
+
+
+    <!-- =================================================
+         MY LEAVE REQUESTS
+    ================================================== -->
+
+    <div class="card">
+
+        <h2>
+            📋 My Leave Requests
+        </h2>
+
+
+        {% if leave_requests %}
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                From Date
+                            </th>
+
+                            <th>
+                                To Date
+                            </th>
+
+                            <th>
+                                Reason
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        {% for leave in leave_requests %}
+
+                            <tr>
+
+                                <td>
+                                    #{{ leave.id }}
+                                </td>
+
+                                <td>
+                                    {{ leave.from_date }}
+                                </td>
+
+                                <td>
+                                    {{ leave.to_date }}
+                                </td>
+
+                                <td>
+                                    {{ leave.reason }}
+                                </td>
+
+                                <td>
+
+
+                                    {% if leave.status == "Pending" %}
+
+                                        <span class="status pending">
+                                            Pending
+                                        </span>
+
+
+                                    {% elif leave.status == "Approved" %}
+
+                                        <span class="status approved">
+                                            Approved
+                                        </span>
+
+
+                                    {% elif leave.status == "Rejected" %}
+
+                                        <span class="status rejected">
+                                            Rejected
+                                        </span>
+
+
+                                    {% else %}
+
+                                        <span class="status unknown">
+                                            {{ leave.status }}
+                                        </span>
+
+                                    {% endif %}
+
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    📭
+                </div>
+
+                <h3>
+                    No Leave Requests
+                </h3>
+
+                <p>
+                    You have not submitted any leave requests yet.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</main>
+
+
+<!-- =====================================================
+     DATE SCRIPT
+===================================================== -->
+
+<script>
+
+    const leaveForm =
+        document.getElementById("leaveForm");
+
+
+    const fromDay =
+        document.getElementById("from_day");
+
+    const fromMonth =
+        document.getElementById("from_month");
+
+    const fromYear =
+        document.getElementById("from_year");
+
+
+    const toDay =
+        document.getElementById("to_day");
+
+    const toMonth =
+        document.getElementById("to_month");
+
+    const toYear =
+        document.getElementById("to_year");
+
+
+    const fromDate =
+        document.getElementById("from_date");
+
+    const toDate =
+        document.getElementById("to_date");
+
+
+    /*
+       Create YYYY-MM-DD date
+    */
+
+    function makeDate(
+        day,
+        month,
+        year
+    ) {
+
+        if (
+            !day ||
+            !month ||
+            !year
+        ) {
+
+            return "";
+
+        }
+
+
+        return (
+            year +
+            "-" +
+            month +
+            "-" +
+            day
+        );
+
+    }
+
+
+    /*
+       Validate actual calendar date.
+    */
+
+    function validDate(
+        day,
+        month,
+        year
+    ) {
+
+        const date =
+            new Date(
+                Number(year),
+                Number(month) - 1,
+                Number(day)
+            );
+
+
+        return (
+            date.getFullYear() === Number(year) &&
+            date.getMonth() === Number(month) - 1 &&
+            date.getDate() === Number(day)
+        );
+
+    }
+
+
+    /*
+       When form is submitted.
+    */
+
+    leaveForm.addEventListener(
+        "submit",
+        function(event) {
+
+
+            /* -----------------------------
+               CREATE FROM DATE
+            ----------------------------- */
+
+            const fromValue =
+                makeDate(
+                    fromDay.value,
+                    fromMonth.value,
+                    fromYear.value
+                );
+
+
+            /* -----------------------------
+               CREATE TO DATE
+            ----------------------------- */
+
+            const toValue =
+                makeDate(
+                    toDay.value,
+                    toMonth.value,
+                    toYear.value
+                );
+
+
+            /* -----------------------------
+               CHECK FROM DATE
+            ----------------------------- */
+
+            if (!fromValue) {
+
+                alert(
+                    "Please select complete From Date."
+                );
+
+                event.preventDefault();
+
+                return;
+
+            }
+
+
+            /* -----------------------------
+               CHECK TO DATE
+            ----------------------------- */
+
+            if (!toValue) {
+
+                alert(
+                    "Please select complete To Date."
+                );
+
+                event.preventDefault();
+
+                return;
+
+            }
+
+
+            /* -----------------------------
+               CHECK REAL DATES
+            ----------------------------- */
+
+            if (
+                !validDate(
+                    fromDay.value,
+                    fromMonth.value,
+                    fromYear.value
+                )
+            ) {
+
+                alert(
+                    "Please select a valid From Date."
+                );
+
+                event.preventDefault();
+
+                return;
+
+            }
+
+
+            if (
+                !validDate(
+                    toDay.value,
+                    toMonth.value,
+                    toYear.value
+                )
+            ) {
+
+                alert(
+                    "Please select a valid To Date."
+                );
+
+                event.preventDefault();
+
+                return;
+
+            }
+
+
+            /* -----------------------------
+               CHECK DATE ORDER
+            ----------------------------- */
+
+            if (toValue < fromValue) {
+
+                alert(
+                    "To Date cannot be before From Date."
+                );
+
+                event.preventDefault();
+
+                return;
+
+            }
+
+
+            /* -----------------------------
+               PUT VALUES INTO HIDDEN INPUTS
+            ----------------------------- */
+
+            fromDate.value =
+                fromValue;
+
+            toDate.value =
+                toValue;
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

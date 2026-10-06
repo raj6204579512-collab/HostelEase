@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Complaints - HostelEase</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #172554;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            height: 78px;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 40px;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .student-name {
+            color: #334155;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 25px;
+        }
+
+        /* =========================
+           TOP SECTION
+        ========================= */
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-top: 8px;
+        }
+
+        .dashboard {
+            text-decoration: none;
+            background: #2563eb;
+            color: white;
+
+            padding: 13px 20px;
+            border-radius: 9px;
+
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .dashboard:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        /* =========================
+           FLASH MESSAGE
+        ========================= */
+
+        .message {
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+
+            font-weight: 600;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        /* =========================
+           CARD
+        ========================= */
+
+        .card {
+            background: white;
+            border: 1px solid #e2e8f0;
+
+            border-radius: 16px;
+            padding: 28px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 6px 20px
+                rgba(15, 23, 42, 0.04);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 22px;
+
+            font-size: 23px;
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .grid {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 20px;
+        }
+
+        .form-group {
+            width: 100%;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+
+            font-weight: 600;
+
+            margin-bottom: 8px;
+
+            color: #334155;
+        }
+
+        input,
+        select,
+        textarea {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #d6e0ed;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+
+            outline: none;
+
+            background: white;
+
+            transition: 0.2s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, 0.10);
+        }
+
+        textarea {
+
+            min-height: 130px;
+
+            resize: vertical;
+        }
+
+        .hint {
+
+            font-size: 12px;
+
+            color: #64748b;
+
+            margin-top: 6px;
+        }
+
+        /* =========================
+           SUBMIT BUTTON
+        ========================= */
+
+        .submit {
+
+            margin-top: 22px;
+
+            background: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            padding: 14px 24px;
+
+            border-radius: 9px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            transition: 0.2s;
+        }
+
+        .submit:hover {
+
+            background: #1d4ed8;
+
+            transform: translateY(-1px);
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table-wrapper {
+
+            width: 100%;
+
+            overflow-x: auto;
+        }
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 700px;
+        }
+
+        th {
+
+            background: #eff6ff;
+
+            color: #1e3a8a;
+
+            padding: 15px;
+
+            text-align: left;
+
+            font-size: 14px;
+        }
+
+        td {
+
+            padding: 15px;
+
+            border-top:
+                1px solid #e5e7eb;
+
+            font-size: 14px;
+        }
+
+        tbody tr:hover {
+
+            background: #f8fafc;
+        }
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status {
+
+            display: inline-block;
+
+            padding: 6px 11px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+        .pending {
+
+            background: #fef3c7;
+
+            color: #92400e;
+        }
+
+        .progress {
+
+            background: #dbeafe;
+
+            color: #1d4ed8;
+        }
+
+        .resolved {
+
+            background: #dcfce7;
+
+            color: #166534;
+        }
+
+        .rejected {
+
+            background: #fee2e2;
+
+            color: #991b1b;
+        }
+
+        .unknown {
+
+            background: #e2e8f0;
+
+            color: #475569;
+        }
+
+        /* =========================
+           EMPTY STATE
+        ========================= */
+
+        .empty {
+
+            text-align: center;
+
+            padding: 35px 20px;
+
+            color: #64748b;
+        }
+
+        .empty-icon {
+
+            font-size: 42px;
+
+            margin-bottom: 10px;
+        }
+
+        .empty h3 {
+
+            margin: 5px 0 8px;
+
+            color: #334155;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media(max-width: 700px) {
+
+            header {
+
+                padding: 0 18px;
+
+            }
+
+            .main {
+
+                width: 94%;
+
+                padding: 30px 0;
+
+            }
+
+            .grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .full {
+
+                grid-column: auto;
+
+            }
+
+            .top {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 20px;
+
+            }
+
+            h1 {
+
+                font-size: 27px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <div class="logo">
+        🏠 HostelEase
+    </div>
+
+    <div class="student-name">
+
+        👨‍🎓 {{ student.name }}
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- =================================================
+         TOP
+    ================================================== -->
+
+    <div class="top">
+
+        <div>
+
+            <h1>
+                📝 Complaints
+            </h1>
+
+            <div class="subtitle">
+                Submit and track your hostel complaints.
+            </div>
+
+        </div>
+
+
+        <!-- IMPORTANT:
+             No student_id argument here
+        -->
+
+        <a
+            href="{{ url_for('student_dashboard') }}"
+            class="dashboard"
+        >
+            ← Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- =================================================
+         FLASH MESSAGES
+    ================================================== -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div
+                    class="message
+                    {% if category == 'error' %}
+                        error
+                    {% else %}
+                        success
+                    {% endif %}"
+                >
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- =================================================
+         RAISE COMPLAINT
+    ================================================== -->
+
+    <div class="card">
+
+        <h2>
+            ➕ Raise a Complaint
+        </h2>
+
+
+        <form
+            method="POST"
+            action="{{ url_for('student_complaints') }}"
+        >
+
+
+            <div class="grid">
+
+
+                <!-- CATEGORY -->
+
+                <div class="form-group">
+
+                    <label for="category">
+                        Category
+                    </label>
+
+                    <select
+                        id="category"
+                        name="category"
+                        required
+                    >
+
+                        <option value="">
+                            Select Category
+                        </option>
+
+                        <option value="Room">
+                            🏠 Room
+                        </option>
+
+                        <option value="Food">
+                            🍽️ Food
+                        </option>
+
+                        <option value="Electricity">
+                            ⚡ Electricity
+                        </option>
+
+                        <option value="Water">
+                            💧 Water
+                        </option>
+
+                        <option value="Cleaning">
+                            🧹 Cleaning
+                        </option>
+
+                        <option value="WiFi">
+                            📶 WiFi
+                        </option>
+
+                        <option value="Other">
+                            📌 Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- PRIORITY -->
+
+                <div class="form-group">
+
+                    <label for="priority">
+                        Priority
+                    </label>
+
+                    <select
+                        id="priority"
+                        name="priority"
+                        required
+                    >
+
+                        <option value="Low">
+                            Low
+                        </option>
+
+                        <option
+                            value="Medium"
+                            selected
+                        >
+                            Medium
+                        </option>
+
+                        <option value="High">
+                            High
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- ROOM NUMBER -->
+
+                <div class="form-group">
+
+                    <label for="room_number">
+                        Room Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="room_number"
+                        name="room_number"
+                        placeholder="Example: A-101"
+                    >
+
+                    <div class="hint">
+                        Enter your currently allocated room number.
+                    </div>
+
+                </div>
+
+
+                <!-- TITLE -->
+
+                <div class="form-group">
+
+                    <label for="title">
+                        Complaint Title
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        placeholder="Enter complaint title"
+                        maxlength="150"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group full">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        name="description"
+                        placeholder="Describe your complaint in detail..."
+                        maxlength="1000"
+                        required
+                    ></textarea>
+
+                    <div class="hint">
+                        Please provide enough information so the administration can understand the problem.
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                class="submit"
+            >
+
+                📝 Submit Complaint
+
+            </button>
+
+
+        </form>
+
+    </div>
+
+
+    <!-- =================================================
+         COMPLAINT HISTORY
+    ================================================== -->
+
+    <div class="card">
+
+        <h2>
+            📋 My Complaints
+        </h2>
+
+
+        {% if complaints %}
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Title
+                            </th>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                Priority
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        {% for complaint in complaints %}
+
+                            <tr>
+
+                                <td>
+                                    #{{ complaint.id }}
+                                </td>
+
+                                <td>
+                                    {{ complaint.title }}
+                                </td>
+
+                                <td>
+                                    {{ complaint.category }}
+                                </td>
+
+                                <td>
+                                    {{ complaint.priority }}
+                                </td>
+
+                                <td>
+
+
+                                    {% if complaint.status == "Pending" %}
+
+                                        <span class="status pending">
+                                            Pending
+                                        </span>
+
+
+                                    {% elif complaint.status == "In Progress" %}
+
+                                        <span class="status progress">
+                                            In Progress
+                                        </span>
+
+
+                                    {% elif complaint.status == "Resolved" %}
+
+                                        <span class="status resolved">
+                                            Resolved
+                                        </span>
+
+
+                                    {% elif complaint.status == "Rejected" %}
+
+                                        <span class="status rejected">
+                                            Rejected
+                                        </span>
+
+
+                                    {% else %}
+
+                                        <span class="status unknown">
+                                            {{ complaint.status }}
+                                        </span>
+
+                                    {% endif %}
+
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    📭
+                </div>
+
+                <h3>
+                    No Complaints Yet
+                </h3>
+
+                <p>
+                    You have not submitted any complaints yet.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

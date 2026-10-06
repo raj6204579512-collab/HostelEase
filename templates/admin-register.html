@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Registration | HostelEase</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 25px;
+
+            background:
+                linear-gradient(
+                    rgba(8, 15, 35, 0.78),
+                    rgba(8, 15, 35, 0.88)
+                ),
+                url("https://images.unsplash.com/photo-1560185008-b033106af5c3?auto=format&fit=crop&w=2000&q=80");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+
+        /* MAIN CONTAINER */
+
+        .page-container {
+            width: 100%;
+            max-width: 1120px;
+
+            min-height: 700px;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            overflow: hidden;
+
+            border-radius: 28px;
+
+            background: rgba(255, 255, 255, 0.10);
+
+            border: 1px solid rgba(255, 255, 255, 0.20);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.45);
+        }
+
+
+        /* LEFT SIDE */
+
+        .left-section {
+            position: relative;
+
+            padding: 55px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(15, 23, 42, 0.72),
+                    rgba(30, 41, 59, 0.50)
+                );
+        }
+
+
+        /* BRAND */
+
+        .brand {
+            position: absolute;
+
+            top: 32px;
+            left: 42px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 45px;
+            height: 45px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 13px;
+
+            font-size: 22px;
+            font-weight: 700;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #8b5cf6
+                );
+
+            box-shadow:
+                0 8px 25px rgba(99, 102, 241, 0.35);
+        }
+
+        .brand-name {
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+
+        /* LEFT CONTENT */
+
+        .left-content {
+            max-width: 500px;
+        }
+
+        .admin-badge {
+            display: inline-flex;
+
+            width: fit-content;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 8px 15px;
+
+            margin-bottom: 22px;
+
+            border-radius: 30px;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            color: #c7d2fe;
+
+            background: rgba(99, 102, 241, 0.18);
+
+            border:
+                1px solid rgba(129, 140, 248, 0.35);
+        }
+
+        .left-content h1 {
+            font-size: 46px;
+
+            line-height: 1.12;
+
+            margin-bottom: 20px;
+        }
+
+        .left-content h1 span {
+            color: #a78bfa;
+        }
+
+        .left-content > p {
+            color: #d1d5db;
+
+            font-size: 16px;
+
+            line-height: 1.8;
+        }
+
+
+        /* FEATURES */
+
+        .features {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 14px;
+
+            margin-top: 32px;
+        }
+
+        .feature {
+            padding: 16px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(255, 255, 255, 0.07);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        .feature-icon {
+            font-size: 21px;
+
+            margin-bottom: 8px;
+        }
+
+        .feature h3 {
+            font-size: 14px;
+
+            margin-bottom: 5px;
+        }
+
+        .feature p {
+            color: #b8c0ce;
+
+            font-size: 12px;
+
+            line-height: 1.45;
+        }
+
+
+        /* RIGHT SIDE */
+
+        .right-section {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 40px;
+
+            background:
+                rgba(255, 255, 255, 0.97);
+        }
+
+
+        /* REGISTER CARD */
+
+        .register-card {
+            width: 100%;
+
+            max-width: 430px;
+        }
+
+
+        /* ICON */
+
+        .register-icon {
+            width: 68px;
+            height: 68px;
+
+            margin: 0 auto 17px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 21px;
+
+            font-size: 29px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #8b5cf6
+                );
+
+            box-shadow:
+                0 12px 30px rgba(99, 102, 241, 0.30);
+        }
+
+
+        /* HEADING */
+
+        .register-card h2 {
+            text-align: center;
+
+            color: #111827;
+
+            font-size: 29px;
+
+            margin-bottom: 7px;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            color: #6b7280;
+
+            font-size: 14px;
+
+            margin-bottom: 24px;
+        }
+
+
+        /* ALERT */
+
+        .alert {
+            padding: 12px 15px;
+
+            margin-bottom: 17px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+
+            text-align: center;
+        }
+
+        .alert.success {
+            color: #166534;
+
+            background: #dcfce7;
+
+            border:
+                1px solid #bbf7d0;
+        }
+
+        .alert.error {
+            color: #991b1b;
+
+            background: #fee2e2;
+
+            border:
+                1px solid #fecaca;
+        }
+
+
+        /* FORM GRID */
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 15px;
+        }
+
+
+        /* FORM GROUP */
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #374151;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        /* INPUT */
+
+        .input-box {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+
+            left: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            font-size: 16px;
+
+            pointer-events: none;
+        }
+
+        .input-box input {
+            width: 100%;
+
+            height: 48px;
+
+            padding:
+                0 42px;
+
+            border:
+                1px solid #d1d5db;
+
+            border-radius: 12px;
+
+            outline: none;
+
+            background: #f9fafb;
+
+            color: #111827;
+
+            font-size: 13px;
+
+            transition: 0.25s ease;
+        }
+
+        .input-box input:focus {
+            background: white;
+
+            border-color: #6366f1;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(99, 102, 241, 0.10);
+        }
+
+        .input-box input::placeholder {
+            color: #9ca3af;
+        }
+
+
+        /* PASSWORD TOGGLE */
+
+        .password-toggle {
+            position: absolute;
+
+            right: 12px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            border: none;
+
+            background: transparent;
+
+            cursor: pointer;
+
+            font-size: 16px;
+
+            color: #6b7280;
+        }
+
+
+        /* REGISTRATION KEY */
+
+        .key-box input {
+            border-color: #c4b5fd;
+
+            background: #faf9ff;
+        }
+
+        .key-info {
+            margin-top: 5px;
+
+            color: #8b5cf6;
+
+            font-size: 10px;
+        }
+
+
+        /* BUTTON */
+
+        .register-btn {
+            width: 100%;
+
+            height: 51px;
+
+            margin-top: 4px;
+
+            border: none;
+
+            border-radius: 13px;
+
+            cursor: pointer;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #8b5cf6
+                );
+
+            box-shadow:
+                0 12px 25px
+                rgba(99, 102, 241, 0.28);
+
+            transition: 0.25s ease;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 16px 30px
+                rgba(99, 102, 241, 0.35);
+        }
+
+        .register-btn:active {
+            transform: translateY(0);
+        }
+
+
+        /* LOGIN LINK */
+
+        .login-text {
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #6b7280;
+
+            font-size: 13px;
+        }
+
+        .login-text a {
+            color: #6366f1;
+
+            font-weight: 700;
+
+            text-decoration: none;
+        }
+
+        .login-text a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* STUDENT LINK */
+
+        .student-login {
+            text-align: center;
+
+            margin-top: 12px;
+        }
+
+        .student-login a {
+            color: #6b7280;
+
+            font-size: 12px;
+
+            text-decoration: none;
+        }
+
+        .student-login a:hover {
+            color: #6366f1;
+        }
+
+
+        /* SECURITY */
+
+        .security-note {
+            margin-top: 18px;
+
+            padding: 10px 12px;
+
+            border-radius: 10px;
+
+            background: #f3f4f6;
+
+            color: #6b7280;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+
+            text-align: center;
+        }
+
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+
+            .page-container {
+                grid-template-columns: 1fr;
+
+                max-width: 520px;
+            }
+
+            .left-section {
+                display: none;
+            }
+
+            .right-section {
+                min-height: 700px;
+
+                padding: 35px 25px;
+            }
+        }
+
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 0;
+
+                background: #f3f4f6;
+            }
+
+            .page-container {
+                min-height: 100vh;
+
+                margin: 0;
+
+                border-radius: 0;
+            }
+
+            .right-section {
+                padding: 25px 18px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+
+            .register-card h2 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+<div class="page-container">
+
+
+    <!-- ========================================= -->
+    <!-- LEFT SECTION -->
+    <!-- ========================================= -->
+
+    <section class="left-section">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                H
+            </div>
+
+            <div class="brand-name">
+                HostelEase
+            </div>
+
+        </div>
+
+
+        <div class="left-content">
+
+            <div class="admin-badge">
+                🔐 Administrator Registration
+            </div>
+
+
+            <h1>
+                Create your
+                <span>Admin</span>
+                Account.
+            </h1>
+
+
+            <p>
+                Register as a HostelEase administrator and manage
+                students, rooms, payments, complaints, leave requests
+                and hostel operations from one powerful dashboard.
+            </p>
+
+
+            <div class="features">
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        👨‍🎓
+                    </div>
+
+                    <h3>
+                        Student Management
+                    </h3>
+
+                    <p>
+                        Manage student profiles and registrations.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🏠
+                    </div>
+
+                    <h3>
+                        Room Management
+                    </h3>
+
+                    <p>
+                        Manage rooms, allocations and occupancy.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        💳
+                    </div>
+
+                    <h3>
+                        Fee Management
+                    </h3>
+
+                    <p>
+                        Manage hostel fees and payments.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        📢
+                    </div>
+
+                    <h3>
+                        Hostel Notices
+                    </h3>
+
+                    <p>
+                        Publish important hostel notices.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ========================================= -->
+    <!-- RIGHT SECTION -->
+    <!-- ========================================= -->
+
+    <section class="right-section">
+
+
+        <div class="register-card">
+
+
+            <!-- ICON -->
+
+            <div class="register-icon">
+                👨‍💼
+            </div>
+
+
+            <!-- TITLE -->
+
+            <h2>
+                Create Admin Account
+            </h2>
+
+
+            <p class="subtitle">
+                Register a new HostelEase administrator
+            </p>
+
+
+
+            <!-- FLASH MESSAGES -->
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% if messages %}
+
+                    {% for category, message in messages %}
+
+                        <div class="alert {{ category }}">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            {% endwith %}
+
+
+
+            <!-- ================================= -->
+            <!-- REGISTRATION FORM -->
+            <!-- ================================= -->
+
+            <form
+                method="POST"
+                action="{{ url_for('admin_register') }}"
+            >
+
+
+                <div class="form-grid">
+
+
+                    <!-- NAME -->
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Full Name
+                        </label>
+
+                        <div class="input-box">
+
+                            <span class="input-icon">
+                                👤
+                            </span>
+
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                placeholder="Enter full name"
+                                value="{{ request.form.get('name', '') }}"
+                                required
+                                autocomplete="name"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PHONE -->
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Phone Number
+                        </label>
+
+                        <div class="input-box">
+
+                            <span class="input-icon">
+                                📱
+                            </span>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                placeholder="Enter phone number"
+                                value="{{ request.form.get('phone', '') }}"
+                                autocomplete="tel"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group full-width">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <div class="input-box">
+
+                            <span class="input-icon">
+                                ✉️
+                            </span>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Enter admin email"
+                                value="{{ request.form.get('email', '') }}"
+                                required
+                                autocomplete="email"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ADMIN KEY -->
+
+                    <div class="form-group full-width">
+
+                        <label for="admin_key">
+                            Admin Registration Key
+                        </label>
+
+                        <div class="input-box key-box">
+
+                            <span class="input-icon">
+                                🔑
+                            </span>
+
+                            <input
+                                type="text"
+                                id="admin_key"
+                                name="admin_key"
+                                placeholder="Enter admin registration key"
+                                required
+                                autocomplete="off"
+                            >
+
+                        </div>
+
+                        <div class="key-info">
+                            🔒 Authorized administrator key required
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="input-box">
+
+                            <span class="input-icon">
+                                🔒
+                            </span>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Create password"
+                                required
+                                minlength="6"
+                                autocomplete="new-password"
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword('password', this)"
+                            >
+                                👁️
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- CONFIRM PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="confirm_password">
+                            Confirm Password
+                        </label>
+
+                        <div class="input-box">
+
+                            <span class="input-icon">
+                                🔒
+                            </span>
+
+                            <input
+                                type="password"
+                                id="confirm_password"
+                                name="confirm_password"
+                                placeholder="Confirm password"
+                                required
+                                minlength="6"
+                                autocomplete="new-password"
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword('confirm_password', this)"
+                            >
+                                👁️
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- SUBMIT BUTTON -->
+
+                <button
+                    type="submit"
+                    class="register-btn"
+                >
+                    Create Admin Account →
+                </button>
+
+
+            </form>
+
+
+
+            <!-- LOGIN -->
+
+            <div class="login-text">
+
+                Already have an admin account?
+
+                <a href="{{ url_for('admin_login') }}">
+                    Login Here
+                </a>
+
+            </div>
+
+
+
+            <!-- STUDENT LOGIN -->
+
+            <div class="student-login">
+
+                <a href="{{ url_for('login') }}">
+                    ← Go to Student Login
+                </a>
+
+            </div>
+
+
+
+            <!-- SECURITY -->
+
+            <div class="security-note">
+
+                🔒 Admin access is protected.
+                Only authorized users should create administrator accounts.
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+</div>
+
+
+
+<script>
+
+    function togglePassword(inputId, button) {
+
+        const input =
+            document.getElementById(inputId);
+
+
+        if (input.type === "password") {
+
+            input.type = "text";
+
+            button.textContent = "🙈";
+
+        } else {
+
+            input.type = "password";
+
+            button.textContent = "👁️";
+
+        }
+
+    }
+
+
+    /*
+     * Password confirmation check
+     */
+
+    document.querySelector("form").addEventListener(
+        "submit",
+        function(event) {
+
+            const password =
+                document.getElementById("password").value;
+
+            const confirmPassword =
+                document.getElementById("confirm_password").value;
+
+
+            if (password !== confirmPassword) {
+
+                event.preventDefault();
+
+                alert("Passwords do not match.");
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Room Allocation - HostelEase</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #102a56;
+        }
+
+        .header {
+            height: 70px;
+            background: white;
+            border-bottom: 1px solid #e1e7ef;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 40px;
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: 700;
+            color: #2463eb;
+            text-decoration: none;
+        }
+
+        .admin {
+            color: #526b8d;
+        }
+
+        .main {
+            max-width: 1400px;
+            margin: auto;
+            padding: 50px 30px;
+        }
+
+        .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #587092;
+            font-size: 17px;
+        }
+
+        .dashboard-btn {
+            background: #2864e8;
+            color: white;
+            text-decoration: none;
+
+            padding: 14px 22px;
+
+            border-radius: 9px;
+
+            font-weight: 600;
+        }
+
+        .message {
+            background: #d9fbe7;
+            color: #08743d;
+
+            border: 1px solid #a8efc4;
+
+            padding: 15px 20px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+
+            border: 1px solid #dfe6ef;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            margin-bottom: 30px;
+
+            box-shadow:
+                0 5px 18px
+                rgba(20, 50, 90, 0.04);
+        }
+
+        .card h2 {
+            font-size: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 22px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 9px;
+        }
+
+        select,
+        input {
+
+            width: 100%;
+
+            height: 48px;
+
+            border:
+                1px solid #d5e0ef;
+
+            border-radius: 9px;
+
+            padding: 0 14px;
+
+            font-size: 15px;
+
+            background: white;
+
+            outline: none;
+        }
+
+        select:focus,
+        input:focus {
+            border-color: #2864e8;
+        }
+
+        .btn {
+
+            margin-top: 25px;
+
+            background: #2864e8;
+
+            color: white;
+
+            border: none;
+
+            padding: 14px 25px;
+
+            border-radius: 9px;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #1854d5;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+        th {
+
+            background: #edf4ff;
+
+            color: #153b78;
+
+            text-align: left;
+
+            padding: 16px;
+        }
+
+        td {
+
+            padding: 16px;
+
+            border-top:
+                1px solid #edf0f5;
+        }
+
+        .status {
+
+            display: inline-block;
+
+            padding: 7px 13px;
+
+            border-radius: 20px;
+
+            background: #d9fbe7;
+
+            color: #08743d;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+        .empty {
+
+            text-align: center;
+
+            color: #657b99;
+
+            padding: 30px;
+        }
+
+        @media(max-width: 800px) {
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .top {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .header {
+                padding: 0 20px;
+            }
+
+            .main {
+                padding: 35px 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <a href="/admin/dashboard"
+       class="logo">
+
+        🏠 HostelEase
+
+    </a>
+
+    <div class="admin">
+
+        🛡️ Administrator
+
+    </div>
+
+</header>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+
+    <!-- TITLE -->
+
+    <div class="top">
+
+        <div>
+
+            <h1>
+                🔑 Room Allocation
+            </h1>
+
+            <p class="subtitle">
+                Assign available rooms to registered students.
+            </p>
+
+        </div>
+
+
+        <a href="/admin/dashboard"
+           class="dashboard-btn">
+
+            ← Dashboard
+
+        </a>
+
+    </div>
+
+
+    <!-- SUCCESS MESSAGE -->
+
+    {% with messages = get_flashed_messages() %}
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="message">
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+
+    <!-- ALLOCATION FORM -->
+
+    <div class="card">
+
+        <h2>
+            ➕ Allocate Room
+        </h2>
+
+
+        <form method="POST"
+              action="/admin/room-allocation">
+
+
+            <div class="form-grid">
+
+
+                <!-- STUDENT -->
+
+                <div class="field">
+
+                    <label>
+                        Select Student
+                    </label>
+
+                    <select name="student_id"
+                            required>
+
+                        <option value="">
+                            Select Student
+                        </option>
+
+
+                        {% for student in students %}
+
+                            <option value="{{ student.id }}">
+
+                                {{ student.name }}
+
+                                -
+                                {{ student.roll_number }}
+
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- ROOM -->
+
+                <div class="field">
+
+                    <label>
+                        Select Available Room
+                    </label>
+
+                    <select name="room_id"
+                            required>
+
+                        <option value="">
+                            Select Room
+                        </option>
+
+
+                        {% for room in rooms %}
+
+                            <option value="{{ room.id }}">
+
+                                Room {{ room.room_number }}
+
+                                -
+                                {{ room.hostel }}
+
+                                -
+                                {{ room.occupied }}/{{ room.capacity }}
+
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+            <button type="submit"
+                    class="btn">
+
+                🏠 Allocate Room
+
+            </button>
+
+
+        </form>
+
+    </div>
+
+
+
+    <!-- CURRENT ALLOCATIONS -->
+
+    <div class="card">
+
+        <h2>
+            📋 Current Room Allocations
+        </h2>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Student
+                        </th>
+
+                        <th>
+                            Enrollment
+                        </th>
+
+                        <th>
+                            Room
+                        </th>
+
+                        <th>
+                            Hostel
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    {% for allocation in allocations %}
+
+                    <tr>
+
+                        <td>
+                            {{ allocation.id }}
+                        </td>
+
+                        <td>
+
+                            <strong>
+                                {{ allocation.student.name }}
+                            </strong>
+
+                        </td>
+
+                        <td>
+
+                            {{ allocation.student.roll_number }}
+
+                        </td>
+
+                        <td>
+
+                            Room
+                            {{ allocation.room.room_number }}
+
+                        </td>
+
+                        <td>
+
+                            {{ allocation.room.hostel }}
+
+                        </td>
+
+                        <td>
+
+                            <span class="status">
+
+                                {{ allocation.status }}
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="6"
+                            class="empty">
+
+                            No room allocations found.
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</main>
+
+</body>
+
+</html>

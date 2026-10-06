@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Room Management - HostelEase</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #102a56;
+        }
+
+        .page-container {
+            width: 90%;
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 25px 0 50px;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 28px;
+        }
+
+        .page-title {
+            margin: 0;
+            font-size: 38px;
+            font-weight: 700;
+            color: #102a56;
+        }
+
+        .page-subtitle {
+            margin-top: 6px;
+            margin-bottom: 0;
+            font-size: 18px;
+            color: #6b7280;
+        }
+
+        .dashboard-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #2864df;
+            color: white;
+            padding: 14px 22px;
+            border-radius: 10px;
+            font-size: 17px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .dashboard-btn:hover {
+            background: #174fc1;
+        }
+
+        /* =========================
+           FLASH MESSAGES
+        ========================= */
+
+        .flash-container {
+            margin-bottom: 20px;
+        }
+
+        .flash-message {
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .flash-success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .flash-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        /* =========================
+           ADD ROOM CARD
+        ========================= */
+
+        .form-card {
+            background: white;
+            border: 1px solid #dce3ed;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(15, 40, 80, 0.06);
+            margin-bottom: 30px;
+        }
+
+        .form-card h2 {
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 30px;
+            color: #102a56;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .field label {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 9px;
+            color: #102a56;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            height: 52px;
+            padding: 0 14px;
+            border: 1px solid #cfd9e8;
+            border-radius: 9px;
+            background: white;
+            color: #111827;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: #2864df;
+            box-shadow: 0 0 0 3px rgba(40, 100, 223, 0.10);
+        }
+
+        .button-row {
+            margin-top: 22px;
+        }
+
+        .add-room-btn {
+            border: none;
+            background: #2864df;
+            color: white;
+            padding: 13px 25px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .add-room-btn:hover {
+            background: #174fc1;
+        }
+
+        /* =========================
+           ROOM TABLE
+        ========================= */
+
+        .table-card {
+            background: white;
+            border: 1px solid #dce3ed;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(15, 40, 80, 0.06);
+        }
+
+        .room-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .room-table thead {
+            background: #edf4ff;
+        }
+
+        .room-table th {
+            padding: 18px;
+            text-align: left;
+            font-size: 15px;
+            color: #123d82;
+            font-weight: 700;
+            border-bottom: 1px solid #dce3ed;
+        }
+
+        .room-table td {
+            padding: 18px;
+            font-size: 15px;
+            color: #24324a;
+            border-bottom: 1px solid #e7ebf1;
+        }
+
+        .room-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .room-table tbody tr:hover {
+            background: #f8fbff;
+        }
+
+        .room-number {
+            color: #1455bd;
+            font-weight: 700;
+        }
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status-badge {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .status-available {
+            background: #d9fbe8;
+            color: #07883c;
+        }
+
+        .status-full {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        /* =========================
+           DELETE BUTTON
+        ========================= */
+
+        .delete-btn {
+            border: none;
+            background: #dc3545;
+            color: white;
+            padding: 8px 13px;
+            border-radius: 7px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background: #b91c2a;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 35px;
+            color: #6b7280;
+            font-size: 16px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .room-table {
+                min-width: 1000px;
+            }
+
+            .table-card {
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .page-header {
+                flex-direction: column;
+                gap: 18px;
+            }
+
+            .page-title {
+                font-size: 30px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-container {
+                width: 94%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="page-container">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1 class="page-title">
+                🏠 Room Management
+            </h1>
+
+            <p class="page-subtitle">
+                Add and manage hostel rooms.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('admin_dashboard') }}"
+            class="dashboard-btn"
+        >
+            ← Dashboard
+        </a>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         FLASH MESSAGES
+    ====================================================== -->
+
+    <div class="flash-container">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="flash-message
+                        {% if category == 'success' %}
+                            flash-success
+                        {% else %}
+                            flash-error
+                        {% endif %}"
+                    >
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+    </div>
+
+
+
+    <!-- =====================================================
+         ADD NEW ROOM
+    ====================================================== -->
+
+    <div class="form-card">
+
+        <h2>
+            ➕ Add New Room
+        </h2>
+
+
+        <!-- IMPORTANT:
+             action hidden field is required
+             by app.py
+        -->
+
+        <form
+            method="POST"
+            action="{{ url_for('admin_rooms') }}"
+        >
+
+            <input
+                type="hidden"
+                name="action"
+                value="add_room"
+            >
+
+
+            <div class="form-grid">
+
+
+                <!-- ROOM NUMBER -->
+
+                <div class="field">
+
+                    <label for="room_number">
+                        Room Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="room_number"
+                        name="room_number"
+                        placeholder="Example: 101"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- HOSTEL -->
+
+                <div class="field">
+
+                    <label for="hostel">
+                        Hostel
+                    </label>
+
+                    <select
+                        id="hostel"
+                        name="hostel"
+                        required
+                    >
+
+                        <option value="">
+                            Select Hostel
+                        </option>
+
+                        <option value="Boys Hostel">
+                            Boys Hostel
+                        </option>
+
+                        <option value="Girls Hostel">
+                            Girls Hostel
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- FLOOR -->
+
+                <div class="field">
+
+                    <label for="floor">
+                        Floor
+                    </label>
+
+                    <input
+                        type="number"
+                        id="floor"
+                        name="floor"
+                        placeholder="Example: 1"
+                        min="1"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- GENDER -->
+
+                <div class="field">
+
+                    <label for="gender">
+                        Gender
+                    </label>
+
+                    <select
+                        id="gender"
+                        name="gender"
+                        required
+                    >
+
+                        <option value="">
+                            Select Gender
+                        </option>
+
+                        <option value="Male">
+                            Male
+                        </option>
+
+                        <option value="Female">
+                            Female
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- CAPACITY -->
+
+                <div class="field">
+
+                    <label for="capacity">
+                        Capacity
+                    </label>
+
+                    <input
+                        type="number"
+                        id="capacity"
+                        name="capacity"
+                        value="4"
+                        min="1"
+                        required
+                    >
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ADD BUTTON -->
+
+            <div class="button-row">
+
+                <button
+                    type="submit"
+                    class="add-room-btn"
+                >
+                    + Add Room
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         ROOM LIST
+    ====================================================== -->
+
+    <div class="table-card">
+
+        <table class="room-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Room Number
+                    </th>
+
+                    <th>
+                        Hostel
+                    </th>
+
+                    <th>
+                        Floor
+                    </th>
+
+                    <th>
+                        Gender
+                    </th>
+
+                    <th>
+                        Capacity
+                    </th>
+
+                    <th>
+                        Occupied
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% if rooms %}
+
+                    {% for room in rooms %}
+
+                        <tr>
+
+                            <td>
+                                {{ room.id }}
+                            </td>
+
+
+                            <td class="room-number">
+                                {{ room.room_number }}
+                            </td>
+
+
+                            <td>
+                                {{ room.hostel }}
+                            </td>
+
+
+                            <td>
+                                {{ room.floor }}
+                            </td>
+
+
+                            <td>
+                                {{ room.gender }}
+                            </td>
+
+
+                            <td>
+                                {{ room.capacity }}
+                            </td>
+
+
+                            <td>
+                                {{ room.occupied }}
+                            </td>
+
+
+                            <td>
+
+                                {% if room.occupied < room.capacity %}
+
+                                    <span
+                                        class="status-badge status-available"
+                                    >
+                                        Available
+                                    </span>
+
+                                {% else %}
+
+                                    <span
+                                        class="status-badge status-full"
+                                    >
+                                        Full
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- DELETE -->
+
+                            <td>
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for('admin_rooms') }}"
+                                    onsubmit="return confirm('Are you sure you want to delete this room?');"
+                                >
+
+                                    <input
+                                        type="hidden"
+                                        name="action"
+                                        value="delete_room"
+                                    >
+
+                                    <input
+                                        type="hidden"
+                                        name="room_id"
+                                        value="{{ room.id }}"
+                                    >
+
+                                    <button
+                                        type="submit"
+                                        class="delete-btn"
+                                    >
+                                        Delete
+                                    </button>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <tr>
+
+                        <td
+                            colspan="9"
+                            class="empty-message"
+                        >
+                            No rooms available.
+                        </td>
+
+                    </tr>
+
+                {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
